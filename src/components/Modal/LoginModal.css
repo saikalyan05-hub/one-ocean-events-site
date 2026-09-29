@@ -1,0 +1,27 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.login-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  padding: var(--s-3);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--blue-bg);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--text-body);
+}
+
+.login-note svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--sky);
+}
+
+.login-note strong { color: var(--ink); }

@@ -1,0 +1,332 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  /* Clips the decorative layer and the photo mask; guarantees no page overflow. */
+  overflow: hidden;
+  --hero-pad-top: clamp(24px, 3vw, 40px);
+  /* Distance from the container's content edge out to the viewport edge, so the
+     photo can reach the screen edge at any width without a magic number. Clamped
+     at 0 below --container, where the container already spans the viewport. */
+  --hero-bleed: calc(var(--gutter) + max(0px, (100vw - var(--container)) / 2));
+  padding-block: var(--hero-pad-top) clamp(28px, 4vw, 52px);
+}
+
+.hero-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* Warm pastel wash standing in for the reference's painted background. */
+.hero-wash {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(90% 70% at 88% 6%, rgba(255, 179, 170, 0.34), transparent 62%),
+    radial-gradient(70% 60% at 4% 18%, rgba(255, 214, 178, 0.42), transparent 66%),
+    radial-gradient(60% 60% at 34% 96%, rgba(182, 140, 255, 0.16), transparent 68%),
+    radial-gradient(70% 70% at 70% 88%, rgba(73, 182, 232, 0.14), transparent 64%),
+    linear-gradient(180deg, #fffdf9 0%, #fff8f3 52%, var(--page) 100%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: var(--z-content);
+  display: grid;
+  /* The reference gives the copy column just over half the width, so the search
+     bar and the four trust badges each sit on a single line. */
+  grid-template-columns: minmax(0, 1.24fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 3vw, 48px);
+  min-height: 440px;
+}
+
+/* --------------------------------------------------------------- copy */
+
+.hero-copy {
+  /* Above the photo: in the reference the white search pill sits *on* the
+     photograph, notching into the organic curve. Everything else in the column
+     stops well short of the curve, so nothing else ends up over the image. */
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-4);
+  max-width: 780px;
+  animation: hero-in var(--t-slow) var(--ease) both;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+}
+
+.hero-eyebrow span:nth-child(1) { color: var(--coral); }
+.hero-eyebrow span:nth-child(3) { color: var(--orange); }
+.hero-eyebrow span:nth-child(5) { color: var(--teal); }
+.hero-eyebrow .dot { color: var(--lavender); letter-spacing: 0; }
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.1rem + 4.6vw, 4.6rem);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.hero-line-1 {
+  color: var(--ink);
+}
+
+/* Multicolour emphasis on the second line, per the reference. */
+.w-starts {
+  background: linear-gradient(100deg, var(--coral) 0%, var(--orange) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.w-here {
+  background: linear-gradient(100deg, var(--lavender) 0%, #e05fb8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-lede {
+  max-width: 34ch;
+  color: var(--navy);
+  font-size: clamp(0.98rem, 0.9rem + 0.3vw, 1.12rem);
+  line-height: 1.5;
+}
+
+.hero-copy .search-bar {
+  margin-top: var(--s-2);
+}
+
+/* -------------------------------------------------------------- media */
+
+.hero-media {
+  /* z-index (not auto) so the layers inside it — including the story button —
+     stay a single unit underneath .hero-copy. */
+  position: relative;
+  z-index: 1;
+  align-self: stretch;
+  min-height: 440px;
+}
+
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  /* Fills the top-right corner of the section, edge to edge, as in the reference.
+     `.hero` clips whatever the bleed pushes past the viewport. */
+  top: calc(var(--hero-pad-top) * -1);
+  right: calc(var(--hero-bleed) * -1);
+  /* Reaches a little way back over the copy column so the curve lands where the
+     reference puts it. The clip-path makes everything left of the curve
+     transparent, and clipping applies to hit-testing too, so the copy stays
+     visible and clickable. */
+  left: calc(clamp(0px, 8vw, 116px) * -1);
+  clip-path: url(#hero-organic);
+  overflow: hidden;
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  animation: ken-burns 26s ease-in-out infinite alternate;
+}
+
+/* Handwritten annotation over the photo. */
+.hero-script {
+  position: absolute;
+  top: 6%;
+  right: clamp(12px, 3vw, 44px);
+  z-index: 2;
+  font-family: var(--font-script);
+  font-size: clamp(1.5rem, 1rem + 1.5vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--white);
+  text-align: left;
+  text-shadow: 0 2px 10px rgba(7, 59, 76, 0.4);
+  transform: rotate(-6deg);
+  pointer-events: none;
+}
+
+.hero-script-heart {
+  position: absolute;
+  top: calc(6% + 108px);
+  right: clamp(16px, 3.4vw, 54px);
+  z-index: 2;
+  color: var(--white);
+  filter: drop-shadow(0 2px 6px rgba(7, 59, 76, 0.4));
+  pointer-events: none;
+}
+
+/* Floating story button over the lower-right of the photo. */
+.hero-story {
+  position: absolute;
+  right: clamp(8px, 2vw, 28px);
+  bottom: clamp(14px, 4vw, 42px);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 10px 20px 10px 10px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(7, 59, 76, 0.32);
+  transition: transform var(--t-fast) var(--ease), box-shadow var(--t-base) var(--ease);
+}
+
+.hero-story:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(7, 59, 76, 0.4);
+}
+
+.hero-story-play {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral), var(--orange));
+  color: var(--white);
+  padding-left: 2px;
+}
+
+/* ---------------------------------------------------------- keyframes */
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes ken-burns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+/* --------------------------------------------------------- responsive */
+
+@media (max-width: 1199px) {
+  /* A little more of the row goes to the copy: the search bar and the trust
+     badges are the widest things in the hero and need it more than the photo. */
+  .hero-inner {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    min-height: 400px;
+  }
+  .hero-media { min-height: 400px; }
+  .hero-lede { max-width: 38ch; }
+}
+
+@media (max-width: 991px) {
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+    min-height: 360px;
+  }
+
+  .hero-media { min-height: 380px; }
+  .hero-script { font-size: 1.3rem; }
+  .hero-script-heart { top: calc(6% + 78px); }
+  .hero-story { padding: 8px 16px 8px 8px; font-size: 0.82rem; }
+}
+
+@media (max-width: 899px) {
+  /* Stack: photo first as a banner, copy below (spec §13, <768 behaviour). */
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-6);
+    min-height: 0;
+  }
+
+  .hero-copy {
+    order: 2;
+    max-width: none;
+  }
+
+  .hero-media {
+    order: 1;
+    min-height: 0;
+    height: clamp(240px, 42vw, 340px);
+  }
+
+  .hero-photo {
+    position: relative;
+    inset: auto;
+    right: auto;
+    height: 100%;
+    /* The organic mask does not read well in a wide short banner — use a soft
+       rounded shape instead of forcing the desktop curve. */
+    clip-path: none;
+    border-radius: var(--r-2xl);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero-lede { max-width: 52ch; }
+}
+
+@media (max-width: 767px) {
+  .hero { padding-top: var(--s-5); }
+
+  .hero-copy { gap: var(--s-3); }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+  }
+
+  .hero-script {
+    top: 8px;
+    right: 12px;
+    font-size: 1.15rem;
+  }
+
+  .hero-script-heart {
+    top: 72px;
+    right: 16px;
+  }
+
+  .hero-script-heart svg { width: 16px; height: 16px; }
+
+  .hero-story {
+    right: 10px;
+    bottom: 10px;
+    min-height: 40px;
+    padding: 6px 14px 6px 6px;
+    font-size: 0.78rem;
+  }
+
+  .hero-story-play { width: 24px; height: 24px; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: clamp(2.05rem, 1.2rem + 5.2vw, 2.6rem); }
+  .hero-media { height: 210px; }
+  .hero-script { display: none; }
+  .hero-script-heart { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy { animation: none; }
+  .hero-photo img { animation: none; }
+}

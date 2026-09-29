@@ -1,0 +1,82 @@
+/* Last band before the footer, so it carries the bottom padding .section drops. */
+.benefits {
+  padding-bottom: clamp(36px, 4.4vw, 64px);
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 1vw, 14px);
+}
+
+.benefit-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+  min-width: 0;
+  padding: 18px 20px;
+  border: 1px solid transparent;
+  border-radius: var(--r-xl);
+  background: var(--b-bg);
+  transition: transform 200ms var(--ease), box-shadow 200ms var(--ease), border-color 200ms var(--ease);
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--b-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.benefit-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--b-accent);
+  box-shadow: var(--shadow-xs);
+}
+
+.benefit-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.benefit-title {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.benefit-sub {
+  color: var(--text-muted);
+  /* Sized so the longest subtitle holds one line at the four-across desktop
+     width, as the reference shows. */
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.benefit-pink     { --b-bg: var(--pink-bg);     --b-accent: #ef5da8; }
+.benefit-lavender { --b-bg: var(--lavender-bg); --b-accent: var(--lavender); }
+.benefit-mint     { --b-bg: var(--mint-bg);     --b-accent: var(--teal); }
+.benefit-peach    { --b-bg: var(--peach-bg);    --b-accent: var(--coral); }
+
+@media (max-width: 1099px) {
+  .benefits-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .benefits-grid { grid-template-columns: minmax(0, 1fr); }
+  .benefit-card { padding: 16px 18px; gap: 14px; }
+  .benefit-icon { width: 48px; height: 48px; }
+  .benefit-icon svg { width: 22px; height: 22px; }
+  .benefit-title { font-size: 0.98rem; }
+  .benefit-sub { font-size: 0.82rem; }
+}

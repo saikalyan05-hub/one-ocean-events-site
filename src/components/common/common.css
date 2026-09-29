@@ -1,0 +1,332 @@
+/* ------------------------------------------------------------- demo tag */
+
+.demo-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 7px;
+  border: 1px solid rgba(182, 140, 255, 0.4);
+  border-radius: var(--r-pill);
+  background: var(--lavender-bg);
+  color: #6b4bb5;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: help;
+}
+
+/* ---------------------------------------------------------------- stars */
+
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--orange);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.stars .stars-value {
+  color: var(--ink);
+}
+
+.stars .stars-count {
+  color: var(--text-subtle);
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------- empty state */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-4);
+  padding: clamp(36px, 6vw, 64px) var(--s-6);
+  border: 1px dashed #d8e2e7;
+  border-radius: var(--r-xl);
+  background: linear-gradient(160deg, var(--white), var(--blue-bg));
+  text-align: center;
+}
+
+.empty-state-icon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  color: var(--coral);
+}
+
+.empty-state-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.empty-state-text {
+  max-width: 46ch;
+  color: var(--text-muted);
+}
+
+.empty-state-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-3);
+}
+
+/* -------------------------------------------------------------- spinner */
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--line);
+  border-top-color: var(--coral);
+  border-radius: 50%;
+  animation: spin 720ms linear infinite;
+}
+
+.loading-block {
+  display: grid;
+  place-items: center;
+  gap: var(--s-3);
+  min-height: 220px;
+  color: var(--text-muted);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ------------------------------------------------------------ skeletons */
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--s-5);
+}
+
+.skeleton-card {
+  height: 320px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(100deg, #f2f6f8 30%, #fbfdfe 50%, #f2f6f8 70%);
+  background-size: 300% 100%;
+  animation: shimmer 1.3s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -150% 0;
+  }
+}
+
+/* ------------------------------------------------------------ breadcrumb */
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--s-4);
+  color: var(--text-subtle);
+  font-size: 0.85rem;
+}
+
+.breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+
+.breadcrumb a:hover {
+  color: var(--coral);
+  text-decoration: underline;
+}
+
+.breadcrumb [aria-current='page'] {
+  color: var(--navy);
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------ icon button */
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--navy);
+  cursor: pointer;
+  transition: color var(--t-base) var(--ease), border-color var(--t-base) var(--ease),
+    background-color var(--t-base) var(--ease), transform var(--t-fast) var(--ease);
+}
+
+.icon-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: translateY(-1px);
+}
+
+.icon-btn[aria-pressed='true'] {
+  border-color: var(--coral);
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+/* Count badge for wishlist / compare affordances. */
+.icon-btn-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.count-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  display: grid;
+  place-items: center;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border: 2px solid var(--white);
+  border-radius: var(--r-pill);
+  background: var(--coral);
+  color: var(--white);
+  font-size: 0.64rem;
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------- tooltip */
+
+.tip {
+  position: relative;
+}
+
+.tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  z-index: var(--z-header);
+  padding: 5px 10px;
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -4px);
+  pointer-events: none;
+  transition: opacity var(--t-base) var(--ease), transform var(--t-base) var(--ease);
+}
+
+.tip:hover::after,
+.tip:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Touch devices get no hover tooltip; the aria-label still announces it. */
+@media (hover: none) {
+  .tip::after {
+    display: none;
+  }
+}
+
+/* -------------------------------------------------------- location select */
+
+.loc-select {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.loc-pin,
+.loc-chevron {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  color: var(--coral);
+  pointer-events: none;
+}
+
+.loc-pin { left: 14px; }
+.loc-chevron { right: 12px; color: var(--navy); }
+
+.loc-input {
+  width: 100%;
+  min-width: 0;
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+}
+
+.loc-input:hover { border-color: var(--coral); }
+
+.loc-input:focus-visible {
+  outline: none;
+  border-color: var(--coral);
+  box-shadow: var(--shadow-ring);
+}
+
+/* Pill variant — header chip. */
+.loc-pill .loc-input {
+  height: 44px;
+  padding: 0 36px 0 38px;
+  border-radius: var(--r-pill);
+  font-size: 0.9rem;
+}
+
+/* Bare variant — sits inside the hero search capsule with no border. */
+.loc-bare .loc-input {
+  height: 100%;
+  min-height: 52px;
+  padding: 0 34px 0 40px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.95rem;
+}
+
+.loc-bare .loc-input:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--coral);
+  border-radius: var(--r-md);
+}
+
+/* Field variant — standard labelled form control. */
+.loc-field {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.loc-field .loc-input {
+  min-height: 46px;
+  padding: 0 36px 0 38px;
+  border-radius: var(--r-md);
+  font-weight: 600;
+}
+
+.loc-field .loc-pin,
+.loc-field .loc-chevron {
+  top: auto;
+  bottom: 13px;
+}

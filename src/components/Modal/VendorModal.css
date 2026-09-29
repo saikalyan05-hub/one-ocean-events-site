@@ -1,0 +1,271 @@
+.vm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+/* ------------------------------------------------------------- hero */
+
+.vm-hero {
+  position: relative;
+  /* Negative margins let the photo bleed to the modal edge under the header. */
+  margin: calc(var(--s-6) * -1) calc(var(--s-6) * -1) 0;
+  height: 260px;
+  overflow: hidden;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  background: var(--blue-bg);
+}
+
+.vm-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vm-pill {
+  position: absolute;
+  top: var(--s-4);
+  left: var(--s-4);
+}
+
+/* ------------------------------------------------------------- head */
+
+.vm-head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+}
+
+.vm-head-text {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.vm-name {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.vm-sub {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.93rem;
+}
+
+.vm-sub svg { color: var(--coral); }
+
+.vm-dot { color: var(--line); }
+
+.vm-rating {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+}
+
+.vm-verified {
+  gap: 5px;
+  background: var(--mint-bg);
+  color: #0E7C6B;
+}
+
+.vm-unverified {
+  gap: 5px;
+  background: var(--soft-grey, #F2F5F7);
+  color: var(--text-muted);
+}
+
+/* Marks a listing invented for the demo, next to the city and category. */
+.vm-sample {
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  background: var(--peach-bg);
+  color: #a15a15;
+  font-weight: 600;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.vm-heart { flex: 0 0 auto; }
+
+/* One-sentence summary, built from the vendor’s own facts. */
+.vm-about {
+  margin: var(--s-5) 0 0;
+  color: var(--text-body);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+/* ------------------------------------------------------- source facts */
+
+.vm-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-3);
+  margin: 0;
+  padding: var(--s-4);
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--page);
+}
+
+.vm-facts li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.vm-fact-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.vm-fact-value {
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------- sections */
+
+.vm-section { min-width: 0; }
+
+.vm-section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin: 0 0 var(--s-3);
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  color: var(--ink);
+}
+
+.vm-chips,
+.vm-portfolio,
+.vm-reviews {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.vm-chip {
+  gap: 5px;
+  background: var(--mint-bg);
+  color: #0E7C6B;
+}
+
+.vm-portfolio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+
+.vm-portfolio li {
+  overflow: hidden;
+  border-radius: var(--r-md);
+  background: var(--blue-bg);
+  aspect-ratio: 4 / 3;
+}
+
+.vm-portfolio img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--t-slow) var(--ease);
+}
+
+.vm-portfolio li:hover img { transform: scale(1.05); }
+
+.vm-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.vm-review {
+  padding: var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--white);
+}
+
+.vm-review-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-bottom: 6px;
+}
+
+.vm-review-author {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.vm-review-text {
+  margin: 0;
+  color: var(--text-body);
+  font-size: 0.95rem;
+}
+
+/* ----------------------------------------------------------- actions */
+
+.vm-actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  /* Sits on the modal background so cards scrolling under it stay legible. */
+  margin: 0 calc(var(--s-6) * -1) calc(var(--s-6) * -1);
+  padding: var(--s-4) var(--s-6);
+  border-top: 1px solid var(--line);
+  background: var(--white);
+}
+
+.vm-actions .btn { flex: 1 1 160px; }
+
+/* ------------------------------------------------------- breakpoints */
+
+@media (max-width: 767px) {
+  .vm-hero { height: 200px; }
+  .vm-facts { grid-template-columns: 1fr; }
+  .vm-portfolio { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .vm-actions .btn { flex: 1 1 100%; }
+}
+
+/* Below 640px the modal body switches to --s-4 padding; match the bleeds. */
+@media (max-width: 640px) {
+  .vm-hero { margin: calc(var(--s-4) * -1) calc(var(--s-4) * -1) 0; }
+
+  .vm-actions {
+    margin: 0 calc(var(--s-4) * -1) calc(var(--s-4) * -1);
+    padding: var(--s-4);
+  }
+}

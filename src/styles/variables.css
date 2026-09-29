@@ -1,0 +1,107 @@
+/**
+ * Design tokens — light theme only (spec §4 / §23).
+ * There is deliberately no dark-mode block: the product is light-theme only.
+ */
+
+:root {
+  /* Brand palette */
+  --ink: #073b4c;
+  --navy: #0b5263;
+  --coral: #ff6b5e;
+  --orange: #ff9f43;
+  --teal: #18b7a0;
+  --sky: #49b6e8;
+  --lavender: #b68cff;
+
+  /* Soft card backgrounds */
+  --mint-bg: #e9faf5;
+  --peach-bg: #fff0e8;
+  --lavender-bg: #f3eeff;
+  --blue-bg: #eaf7ff;
+  --pink-bg: #ffeef2;
+  --yellow-bg: #fff6e0;
+  --rose-bg: #fdecf3;
+
+  /* Surfaces */
+  --page: #fffefc;
+  --line: #e8edf0;
+  --white: #ffffff;
+
+  /* Derived text tones */
+  --text: var(--ink);
+  --text-muted: #557280;
+  --text-subtle: #7b929d;
+
+  /* Accent tints used by pills, focus rings and hovers */
+  --coral-soft: rgba(255, 107, 94, 0.12);
+  --teal-soft: rgba(24, 183, 160, 0.12);
+  --sky-soft: rgba(73, 182, 232, 0.12);
+  --lavender-soft: rgba(182, 140, 255, 0.14);
+  --orange-soft: rgba(255, 159, 67, 0.14);
+
+  /* Radii */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-2xl: 36px;
+  --r-pill: 999px;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgba(7, 59, 76, 0.05);
+  --shadow-sm: 0 4px 14px rgba(7, 59, 76, 0.07);
+  --shadow-md: 0 10px 30px rgba(7, 59, 76, 0.09);
+  --shadow-lg: 0 20px 48px rgba(7, 59, 76, 0.13);
+  --shadow-ring: 0 0 0 3px rgba(255, 107, 94, 0.28);
+
+  /* Spacing scale */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+
+  /* Layout */
+  --container: 1400px;
+  --gutter: 32px;
+  --header-h: 76px;
+
+  /* Typography */
+  --font-display: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  --font-ui: 'Manrope', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script: 'Caveat', 'Segoe Script', cursive;
+
+  /* Motion */
+  --t-fast: 150ms;
+  --t-base: 220ms;
+  --t-slow: 420ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Layering — one place to reason about stacking (spec §35). */
+  --z-decor: 0;
+  --z-content: 1;
+  --z-sticky-bar: 40;
+  --z-header: 50;
+  --z-drawer: 60;
+  --z-modal: 70;
+  --z-toast: 80;
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --gutter: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --gutter: 16px;
+    --header-h: 64px;
+  }
+}

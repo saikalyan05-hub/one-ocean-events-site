@@ -1,0 +1,106 @@
+.carousel {
+  position: relative;
+  /* --visible drives card width; each breakpoint just changes this number. */
+  --visible: 5;
+  --gap: 20px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: var(--gap);
+  /* Vertical padding leaves room for the card hover lift and its shadow. */
+  padding-block: 6px 10px;
+  /* Bleed to the gutter so a partially visible card is not clipped mid-card. */
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: -3px;
+  border-radius: var(--r-md);
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  width: calc((100% - (var(--visible) - 1) * var(--gap)) / var(--visible));
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+/* ------------------------------------------------------------- arrows */
+
+.carousel-arrow {
+  position: absolute;
+  top: 38%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--navy);
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: opacity var(--t-base) var(--ease), transform var(--t-fast) var(--ease),
+    color var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
+}
+
+.carousel-arrow:hover:not(:disabled) {
+  border-color: var(--coral);
+  color: var(--coral);
+  transform: scale(1.06);
+}
+
+/* Hidden rather than merely dimmed at the ends, and removed from the tab order. */
+.carousel-arrow:disabled {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.carousel-prev { left: -14px; }
+.carousel-next { right: -14px; }
+
+/* --------------------------------------------------------- breakpoints */
+
+@media (max-width: 1439px) {
+  .carousel { --visible: 4; }
+}
+
+@media (max-width: 1199px) {
+  .carousel { --visible: 3; }
+}
+
+@media (max-width: 991px) {
+  .carousel { --visible: 2; --gap: 16px; }
+  .carousel-prev { left: -8px; }
+  .carousel-next { right: -8px; }
+}
+
+@media (max-width: 767px) {
+  .carousel { --visible: 1.6; --gap: 14px; }
+
+  /* Arrows are redundant next to touch scrolling and would sit over the cards. */
+  .carousel-arrow { display: none; }
+}
+
+@media (max-width: 480px) {
+  .carousel { --visible: 1.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track { scroll-behavior: auto; }
+}

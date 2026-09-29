@@ -1,0 +1,139 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  max-width: 760px;
+  padding: 8px 8px 8px 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--white);
+  box-shadow: 0 14px 34px rgba(7, 59, 76, 0.1);
+}
+
+.search-field {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  display: grid;
+  place-items: center;
+  color: var(--coral);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  min-width: 0;
+  height: 52px;
+  padding: 0 12px 0 44px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  font-size: 0.97rem;
+}
+
+.search-input::placeholder {
+  color: var(--text-subtle);
+}
+
+.search-input:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--coral);
+}
+
+/* Clears the native Safari/Chrome search clear affordance for a flat look. */
+.search-input::-webkit-search-decoration,
+.search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+.search-divider {
+  flex: 0 0 auto;
+  width: 1px;
+  height: 30px;
+  background: var(--line);
+}
+
+.search-loc {
+  flex: 0 0 auto;
+  width: 158px;
+  min-width: 0;
+}
+
+.search-submit {
+  flex: 0 0 auto;
+  min-width: 122px;
+  height: 52px;
+  padding-inline: 22px;
+}
+
+.search-submit-icon {
+  display: none;
+}
+
+/* ------------------------------------------------- page (discovery) variant */
+
+.search-page {
+  max-width: none;
+  box-shadow: var(--shadow-sm);
+}
+
+/* -------------------------------------------------------------- responsive */
+
+@media (max-width: 1199px) {
+  /* Still a side-by-side hero, but on a narrower copy column. Hand width back
+     to the text field so the placeholder stays legible. */
+  .search-loc { width: 146px; }
+  /* Tighter than the default bare variant so the full city name still fits. */
+  .search-loc .loc-input { padding-inline: 34px 28px; }
+  .search-loc .loc-chevron { right: 8px; }
+  .search-loc .loc-pin { left: 10px; }
+  .search-submit { min-width: 100px; padding-inline: 12px; }
+}
+
+@media (max-width: 900px) {
+  .search-loc { width: 150px; }
+  .search-submit { min-width: 112px; padding-inline: 18px; }
+}
+
+@media (max-width: 767px) {
+  /* Stack cleanly rather than squeezing three controls onto one row (spec §6). */
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px;
+    border-radius: var(--r-xl);
+  }
+
+  .search-field {
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+  }
+
+  .search-input { height: 48px; }
+
+  .search-divider { display: none; }
+
+  .search-loc {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+  }
+
+  .search-loc .loc-input { min-height: 48px; }
+
+  .search-submit {
+    width: 100%;
+    height: 48px;
+  }
+
+  .search-submit-icon { display: block; }
+}

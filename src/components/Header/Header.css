@@ -1,0 +1,321 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: rgba(255, 254, 252, 0.88);
+  backdrop-filter: saturate(150%) blur(10px);
+  transition: box-shadow var(--t-base) var(--ease), background-color var(--t-base) var(--ease);
+}
+
+.site-header.is-scrolled {
+  background: rgba(255, 254, 252, 0.96);
+  box-shadow: 0 4px 22px rgba(7, 59, 76, 0.08);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  min-height: var(--header-h);
+}
+
+/* ----------------------------------------------------------------- logo */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.logo-mark {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+}
+
+.logo-words {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo-top {
+  font-size: 1.32rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--navy);
+}
+
+.logo-bottom {
+  margin-top: 3px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.42em;
+  color: var(--coral);
+}
+
+/* ------------------------------------------------------------------ nav */
+
+.header-nav {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.header-nav ul {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 1.4vw, 22px);
+}
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 8px 4px;
+  color: var(--navy);
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color var(--t-base) var(--ease);
+}
+
+.nav-link:hover {
+  color: var(--coral);
+}
+
+/* Coral underline marks the active route (reference header). */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, var(--coral), var(--orange));
+  transform: translateX(-50%);
+  transition: width var(--t-base) var(--ease);
+}
+
+.nav-link.is-active {
+  color: var(--coral);
+  font-weight: 700;
+}
+
+.nav-link.is-active::after {
+  width: 100%;
+}
+
+/* -------------------------------------------------------------- actions */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.header-loc {
+  width: 168px;
+}
+
+.count-dot {
+  min-width: 11px;
+  height: 11px;
+  padding: 0;
+  background: var(--teal);
+}
+
+.header-cta {
+  padding-inline: 26px;
+}
+
+/* --------------------------------------------------------------- burger */
+
+.header-burger {
+  display: none;
+  place-items: center;
+  /* Never let the flex row shrink the only way out of a mobile header. */
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--white);
+  color: var(--navy);
+  cursor: pointer;
+}
+
+.header-burger:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+}
+
+/* ------------------------------------------------------- mobile drawer */
+
+.mobile-scrim {
+  position: fixed;
+  inset: var(--header-h) 0 0;
+  z-index: var(--z-drawer);
+  background: rgba(7, 59, 76, 0.34);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--t-base) var(--ease), visibility var(--t-base);
+}
+
+.mobile-scrim.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  z-index: calc(var(--z-drawer) + 1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  max-height: calc(100vh - var(--header-h));
+  padding: var(--s-5) var(--gutter) var(--s-8);
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0 0 var(--r-xl) var(--r-xl);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: drawer-in var(--t-base) var(--ease);
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mobile-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  min-height: 52px;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  color: var(--navy);
+  font-size: 1.02rem;
+  font-weight: 700;
+  transition: background-color var(--t-base) var(--ease), color var(--t-base) var(--ease);
+}
+
+.mobile-link:hover,
+.mobile-link:focus-visible {
+  background: var(--peach-bg);
+}
+
+.mobile-link.is-active {
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+.mobile-link-lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-count {
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: var(--r-pill);
+  background: var(--coral-soft);
+  color: var(--coral);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.mobile-divider {
+  height: 1px;
+  background: var(--line);
+}
+
+.mobile-loc {
+  width: 100%;
+}
+
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* ---------------------------------------------------------- breakpoints */
+
+/* The drawer is a phone/tablet affordance only. Even if state said otherwise,
+   it must never paint over the desktop layout. */
+@media (min-width: 992px) {
+  .mobile-menu,
+  .mobile-scrim {
+    display: none;
+  }
+}
+
+@media (max-width: 1279px) {
+  .header-inner { gap: var(--s-4); }
+  .header-loc { width: 150px; }
+  .header-nav ul { gap: 10px; }
+  .nav-link { font-size: 0.9rem; }
+}
+
+@media (max-width: 1099px) {
+  /* Compare lives in the floating compare bar at this width; drop it here. */
+  .header-compare { display: none; }
+  .header-loc { width: 158px; }
+  .logo-top { font-size: 1.15rem; }
+}
+
+@media (max-width: 991px) {
+  .header-nav,
+  .header-loc,
+  .header-cta {
+    display: none;
+  }
+
+  .header-inner { gap: var(--s-3); }
+  .header-actions { gap: 6px; }
+
+  .header-burger {
+    display: grid;
+  }
+
+  .header-inner {
+    justify-content: space-between;
+  }
+
+  .header-actions {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-mark { width: 36px; height: 36px; }
+  .logo-top { font-size: 1.02rem; }
+  .logo-bottom { font-size: 0.6rem; letter-spacing: 0.34em; }
+  .header-actions { gap: 6px; }
+  .icon-btn { width: 40px; height: 40px; }
+}
+
+/* Narrow phones: the logo plus three controls no longer fit on one row, so the
+   profile shortcut drops out — it is still in the drawer, two taps away. */
+@media (max-width: 430px) {
+  .header-profile { display: none; }
+  .logo-mark { width: 36px; height: 36px; }
+  .logo-top { font-size: 1.05rem; }
+  .logo-bottom { font-size: 0.62rem; letter-spacing: 0.34em; }
+}

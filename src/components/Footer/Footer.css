@@ -1,0 +1,139 @@
+.site-footer {
+  flex: 0 0 auto;
+  margin-top: var(--s-12);
+  border-top: 1px solid var(--line);
+  background: linear-gradient(180deg, #fdfbf8 0%, #f6fbfd 100%);
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.1fr) minmax(0, 2.6fr);
+  gap: clamp(28px, 4vw, 64px);
+  padding-block: clamp(36px, 4vw, 56px) var(--s-8);
+}
+
+/* ---------------------------------------------------------------- brand */
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  min-width: 0;
+}
+
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.footer-logo-top {
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.footer-logo-bottom {
+  margin-top: 3px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  color: var(--coral);
+}
+
+.footer-tagline {
+  max-width: 44ch;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.footer-demo {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 46ch;
+  padding: 10px 12px;
+  border: 1px solid rgba(182, 140, 255, 0.35);
+  border-radius: var(--r-md);
+  background: var(--lavender-bg);
+  color: #5c3fa3;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.footer-demo svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+/* --------------------------------------------------------------- groups */
+
+.footer-groups {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--s-6) var(--s-4);
+  min-width: 0;
+}
+
+.footer-group {
+  min-width: 0;
+}
+
+.footer-group-title {
+  margin-bottom: 10px;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.footer-group ul {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.footer-group a {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  transition: color var(--t-base) var(--ease);
+}
+
+.footer-group a:hover {
+  color: var(--coral);
+}
+
+/* --------------------------------------------------------------- bottom */
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-block: var(--s-4) var(--s-6);
+  border-top: 1px solid var(--line);
+  color: var(--text-subtle);
+  font-size: 0.82rem;
+}
+
+.footer-city {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ----------------------------------------------------------- responsive */
+
+@media (max-width: 1099px) {
+  .footer-inner { grid-template-columns: minmax(0, 1fr); }
+  .footer-groups { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+  .footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-bottom { justify-content: flex-start; }
+}

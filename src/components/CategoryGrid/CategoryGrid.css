@@ -1,0 +1,120 @@
+.category-section {
+  position: relative;
+}
+
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: clamp(8px, 0.9vw, 16px);
+}
+
+.category-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  min-height: 124px;
+  padding: 18px 10px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--r-lg);
+  background: var(--tile-bg, var(--blue-bg));
+  color: var(--ink);
+  cursor: pointer;
+  text-align: center;
+  transition: transform 180ms var(--ease), box-shadow 180ms var(--ease), border-color 180ms var(--ease);
+}
+
+.category-tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--tile-accent, var(--sky));
+  box-shadow: var(--shadow-md);
+}
+
+.category-icon {
+  display: grid;
+  place-items: center;
+  /* Matches the reference, where the glyph is the dominant element of the tile. */
+  width: 44px;
+  height: 44px;
+  color: var(--tile-accent, var(--sky));
+  transition: transform 180ms var(--ease);
+}
+
+.category-tile:hover .category-icon {
+  transform: scale(1.08);
+}
+
+.category-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.25;
+  /* Two lines max so every tile in the row keeps the same height. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------- tones */
+
+.tone-pink     { --tile-bg: var(--pink-bg);     --tile-accent: #ef5da8; }
+.tone-lavender { --tile-bg: var(--lavender-bg); --tile-accent: var(--lavender); }
+.tone-peach    { --tile-bg: var(--peach-bg);    --tile-accent: #f4468c; }
+.tone-yellow   { --tile-bg: var(--yellow-bg);   --tile-accent: var(--orange); }
+.tone-sky      { --tile-bg: var(--blue-bg);     --tile-accent: var(--sky); }
+.tone-rose     { --tile-bg: var(--rose-bg);     --tile-accent: #ec4899; }
+.tone-mint     { --tile-bg: var(--mint-bg);     --tile-accent: var(--teal); }
+.tone-blue     { --tile-bg: var(--blue-bg);     --tile-accent: #2f9fe0; }
+
+/* ----------------------------------------------------------- responsive */
+
+@media (max-width: 1199px) {
+  .category-list { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (max-width: 991px) {
+  .category-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .category-tile { min-height: 116px; }
+}
+
+@media (max-width: 767px) {
+  /* Horizontal scroll strip, edge-to-edge but without page overflow (spec §8). */
+  .category-list {
+    display: flex;
+    gap: 10px;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    padding-block: 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .category-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-list > li {
+    flex: 0 0 auto;
+    width: 118px;
+    scroll-snap-align: start;
+  }
+
+  .category-tile {
+    min-height: 112px;
+    padding: 14px 8px;
+  }
+
+  .category-icon { width: 38px; height: 38px; }
+  .category-icon svg { width: 22px; height: 22px; }
+  .category-label { font-size: 0.76rem; }
+}
+
+@media (max-width: 480px) {
+  .category-list > li { width: 106px; }
+}

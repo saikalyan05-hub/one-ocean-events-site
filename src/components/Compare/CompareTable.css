@@ -1,0 +1,167 @@
+/* Horizontal scroll keeps three columns usable on a phone without squashing. */
+.cmp-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  margin-inline: calc(var(--s-5) * -1);
+  padding-inline: var(--s-6);
+}
+
+.cmp-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.cmp-table th,
+.cmp-table td {
+  padding: var(--s-3);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  font-size: 0.9rem;
+}
+
+/* Row-label column stays visible while the vendor columns scroll. */
+.cmp-table tbody th[scope='row'] {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 150px;
+  min-width: 130px;
+  background: var(--white);
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.cmp-table td {
+  color: var(--text-body);
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------- head cells */
+
+.cmp-corner {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: 150px;
+  background: var(--white);
+}
+
+.cmp-vendor-head {
+  min-width: 190px;
+  padding-top: 0;
+}
+
+.cmp-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.cmp-img {
+  width: 100%;
+  height: 96px;
+  border-radius: var(--r-md);
+  object-fit: cover;
+}
+
+.cmp-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.cmp-remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--white);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
+}
+
+.cmp-remove:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+}
+
+/* -------------------------------------------------------------- bands */
+
+.cmp-band th {
+  padding-block: 10px;
+  background: var(--page);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------- cells */
+
+.cmp-yes {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: #0E7C6B;
+}
+
+.cmp-no { color: var(--text-subtle); }
+
+.cmp-services {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.cmp-services li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cmp-services svg {
+  flex: 0 0 auto;
+  color: var(--teal);
+}
+
+.cmp-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+@media (max-width: 599px) {
+  .cmp-scroll {
+    margin-inline: calc(var(--s-4) * -1);
+    padding-inline: var(--s-4);
+  }
+
+  .cmp-table tbody th[scope='row'],
+  .cmp-corner { width: 118px; min-width: 110px; }
+}
+
+@media (max-width: 640px) {
+  .cmp-scroll {
+    margin-inline: calc(var(--s-4) * -1);
+    padding-inline: var(--s-4);
+  }
+}
+
+/* Outside a modal there is no padding to cancel, so the negative margins go. */
+.cmp-scroll.cmp-flush {
+  margin-inline: 0;
+  padding-inline: 0;
+}

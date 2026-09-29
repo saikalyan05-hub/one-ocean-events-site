@@ -1,0 +1,56 @@
+.trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* Tuned so all four badges hold one line at the hero's desktop width. */
+  gap: 10px 20px;
+  max-width: 780px;
+}
+
+.trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.trust-icon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  color: var(--white);
+}
+
+.trust-teal { background: var(--teal); }
+.trust-lavender { background: var(--lavender); }
+.trust-orange { background: var(--orange); }
+.trust-sky { background: var(--sky); }
+
+.trust-label {
+  color: var(--navy);
+  font-size: 0.86rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (max-width: 991px) {
+  .trust-row { gap: 10px 18px; }
+  .trust-label { font-size: 0.82rem; }
+}
+
+@media (max-width: 560px) {
+  /* Two per row keeps the badges readable without horizontal overflow. */
+  .trust-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 12px;
+  }
+
+  .trust-label {
+    font-size: 0.78rem;
+    white-space: normal;
+  }
+}

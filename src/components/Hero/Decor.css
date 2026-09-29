@@ -1,0 +1,111 @@
+/**
+ * Decorative leaves / butterflies.
+ * The layer is inert: no pointer events, no layout participation, always behind
+ * content, and clipped to its container so it can never cause page overflow.
+ */
+
+.decor-layer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-decor);
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  contain: paint;
+}
+
+.decor {
+  position: absolute;
+  display: block;
+  will-change: transform;
+}
+
+.decor-leaf { opacity: 0.55; }
+.decor-butterfly { opacity: 0.9; }
+
+/* --------------------------------------------------------- hero placement */
+
+/* Left edge cluster — kept outside the text column's 640px reading width. */
+.d-l1 { top: 4%;  left: -26px; width: 92px;  height: 144px; transform: rotate(18deg);   animation: float-a 13s ease-in-out infinite; }
+.d-l2 { top: 30%; left: -34px; width: 74px;  height: 116px; transform: rotate(-34deg);  animation: float-b 16s ease-in-out infinite; }
+.d-l3 { top: 62%; left: -18px; width: 64px;  height: 100px; transform: rotate(44deg);   animation: float-a 15s ease-in-out infinite 1.5s; }
+.d-l5 { bottom: -22px; left: 9%; width: 70px; height: 110px; transform: rotate(-12deg); animation: float-b 18s ease-in-out infinite 0.8s; }
+
+/* Right edge cluster — sits beyond the photo, never over it. */
+.d-l4 { top: -20px; right: -22px; width: 86px; height: 134px; transform: rotate(-24deg); animation: float-b 14s ease-in-out infinite; }
+.d-l6 { top: 44%;   right: -30px; width: 68px; height: 106px; transform: rotate(36deg);  animation: float-a 17s ease-in-out infinite 1s; }
+.d-l7 { bottom: 4%; right: -14px; width: 60px; height: 94px;  transform: rotate(-52deg); animation: float-b 15s ease-in-out infinite 2s; }
+.d-l8 { top: 12%;   left: 34%;    width: 54px; height: 84px;  transform: rotate(62deg);  opacity: 0.32; animation: float-a 19s ease-in-out infinite; }
+
+/* Butterflies — near the headline and the image seam, clear of the search bar. */
+.d-b1 { top: 9%;  left: 44%; width: 44px; height: 38px; animation: flutter-a 11s ease-in-out infinite; }
+.d-b2 { top: 46%; left: -6px; width: 38px; height: 33px; animation: flutter-b 13s ease-in-out infinite 1.2s; }
+.d-b3 { top: 26%; right: 30%; width: 34px; height: 30px; opacity: 0.8; animation: flutter-a 15s ease-in-out infinite 2s; }
+
+/* --------------------------------------------------- page-section placement */
+
+.d-p1 { top: 8%;    left: -28px;  width: 66px; height: 104px; transform: rotate(26deg);  animation: float-a 17s ease-in-out infinite; }
+.d-p2 { top: 52%;   right: -30px; width: 72px; height: 112px; transform: rotate(-38deg); animation: float-b 19s ease-in-out infinite 1s; }
+.d-p3 { bottom: 4%; left: -20px;  width: 56px; height: 88px;  transform: rotate(-14deg); animation: float-a 21s ease-in-out infinite 2s; }
+.d-pb1 { top: 22%;  right: 6%;    width: 32px; height: 28px;  animation: flutter-b 14s ease-in-out infinite; }
+
+/* -------------------------------------------------------------- keyframes */
+
+@keyframes float-a {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--rot, 0deg)); }
+  50%      { transform: translate3d(6px, -14px, 0) rotate(var(--rot, 0deg)); }
+}
+
+@keyframes float-b {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(-8px, 12px, 0); }
+}
+
+@keyframes flutter-a {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  25%      { transform: translate3d(14px, -10px, 0) rotate(7deg); }
+  50%      { transform: translate3d(4px, -20px, 0) rotate(-5deg); }
+  75%      { transform: translate3d(-10px, -8px, 0) rotate(4deg); }
+}
+
+@keyframes flutter-b {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  33%      { transform: translate3d(-12px, -14px, 0) rotate(-6deg); }
+  66%      { transform: translate3d(10px, -6px, 0) rotate(6deg); }
+}
+
+/* ------------------------------------------------------------- responsive */
+
+/* Tablet: thin out the arrangement. */
+@media (max-width: 991px) {
+  .decor .hide-md,
+  .decor-layer .hide-md {
+    display: none;
+  }
+
+  .decor-leaf { opacity: 0.4; }
+}
+
+/* Mobile: keep only a couple of small accents. */
+@media (max-width: 767px) {
+  .decor-layer .hide-sm {
+    display: none;
+  }
+
+  .decor-leaf {
+    opacity: 0.32;
+    transform: scale(0.72);
+  }
+
+  .d-l1 { width: 62px; height: 96px; left: -22px; }
+  .d-l2 { width: 52px; height: 82px; left: -24px; }
+  .d-b1 { top: 5%; left: auto; right: 6%; width: 32px; height: 28px; }
+}
+
+/* ------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .decor {
+    animation: none !important;
+  }
+}

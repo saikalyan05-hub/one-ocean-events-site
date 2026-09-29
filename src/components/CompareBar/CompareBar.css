@@ -1,0 +1,180 @@
+.compare-bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-sticky-bar);
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 -8px 26px rgba(7, 59, 76, 0.1);
+  animation: compare-in var(--t-slow) var(--ease);
+  /* Clears the iOS home indicator. */
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.compare-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: var(--s-3);
+}
+
+/* ---------------------------------------------------------------- slots */
+
+.compare-slots {
+  display: flex;
+  align-items: stretch;
+  gap: var(--s-3);
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.compare-slots::-webkit-scrollbar { display: none; }
+
+.compare-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  width: 190px;
+  padding: 8px 26px 8px 8px;
+  border-radius: var(--r-md);
+}
+
+.compare-slot.is-filled {
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.compare-slot.is-empty {
+  justify-content: center;
+  padding: 8px;
+  border: 1px dashed var(--line);
+  color: var(--text-subtle);
+  font-size: 0.82rem;
+}
+
+.compare-thumb {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-sm);
+  object-fit: cover;
+}
+
+.compare-slot-name {
+  min-width: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+/*
+ * The circle you see is 20px, but a 20px button is below the 24px minimum
+ * for a pointer target (WCAG 2.5.8). The box is 26px and the circle is
+ * painted by ::before inset 3px, so the tray looks identical while the
+ * hit area is comfortable. top/right drop from 5 to 2 to keep the
+ * circle centred where it was.
+ */
+.compare-slot-remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.compare-slot-remove::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--page);
+  transition: background var(--t-fast) var(--ease);
+}
+
+/* Positioned so it paints above the absolutely positioned circle. */
+.compare-slot-remove svg {
+  position: relative;
+}
+
+.compare-slot-remove:hover::before {
+  background: var(--coral-soft);
+}
+
+.compare-slot-remove:hover {
+  color: var(--coral);
+}
+
+/* -------------------------------------------------------------- actions */
+
+.compare-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex: 0 0 auto;
+}
+
+.compare-count {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.compare-count strong { color: var(--ink); }
+
+@keyframes compare-in {
+  from { transform: translateY(100%); }
+}
+
+/* ---------------------------------------------------------- breakpoints */
+
+@media (max-width: 991px) {
+  .compare-slot { width: 160px; }
+}
+
+@media (max-width: 767px) {
+  .compare-bar-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--s-2);
+  }
+
+  .compare-slot {
+    width: 132px;
+    padding-right: 22px;
+  }
+
+  .compare-thumb { width: 32px; height: 32px; }
+
+  .compare-slot-name { font-size: 0.72rem; }
+
+  .compare-bar-actions { justify-content: space-between; }
+
+  .compare-bar-actions .btn-primary { flex: 1 1 auto; }
+}
+
+@media (max-width: 480px) {
+  /* The empty placeholders are the first thing to go on a small screen. */
+  .compare-slot.is-empty { display: none; }
+
+  .compare-clear { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compare-bar { animation: none; }
+}

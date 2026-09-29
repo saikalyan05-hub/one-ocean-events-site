@@ -1,0 +1,243 @@
+.vendor-card {
+  display: flex;
+  flex-direction: column;
+  /* Fills its grid/track cell so sibling cards always match height (spec §11). */
+  height: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform 200ms var(--ease), box-shadow 200ms var(--ease), border-color 200ms var(--ease);
+}
+
+.vendor-card:hover {
+  transform: translateY(-4px);
+  border-color: #f3d9d4;
+  box-shadow: var(--shadow-md);
+}
+
+/* Keeps the hover affordance when tabbing to a control inside the card. */
+.vendor-card:focus-within {
+  border-color: var(--coral);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------------------------------------------------------------- media */
+
+.vendor-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--blue-bg);
+}
+
+.vendor-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 320ms var(--ease);
+}
+
+.vendor-card:hover .vendor-img {
+  transform: scale(1.04);
+}
+
+.vendor-heart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--navy);
+  cursor: pointer;
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--t-fast) var(--ease), color var(--t-base) var(--ease),
+    background-color var(--t-base) var(--ease);
+}
+
+.vendor-heart:hover {
+  color: var(--coral);
+  transform: scale(1.08);
+}
+
+.vendor-heart.is-on {
+  background: var(--coral);
+  color: var(--white);
+  animation: heart-pop 320ms var(--ease);
+}
+
+.vendor-pill {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: var(--r-pill);
+  background: var(--white);
+  color: var(--navy);
+  font-size: 0.74rem;
+  font-weight: 800;
+  box-shadow: var(--shadow-xs);
+}
+
+/* One tint per vendor category. Class names come from categorySlug(), so a
+   multi-word category such as "Live Bands" resolves to .pill-live-bands. */
+.pill-decorators       { background: var(--pink-bg); color: #d6417f; }
+.pill-catering         { background: var(--mint-bg); color: #0d8f7c; }
+.pill-florists         { background: var(--rose-bg); color: #c0447a; }
+.pill-entertainment    { background: var(--lavender-bg); color: #6b53c9; }
+.pill-djs              { background: var(--lavender-bg); color: #5b4bbd; }
+.pill-live-bands       { background: var(--blue-bg); color: #1d6c93; }
+.pill-birthday-parties { background: var(--yellow-bg); color: #9a6a12; }
+.pill-return-gifts     { background: var(--peach-bg); color: #c2513f; }
+.pill-corporate-events { background: var(--blue-bg); color: #16597a; }
+.pill-photography      { background: var(--mint-bg); color: #0e7c6b; }
+.pill-mehendi-makeup   { background: var(--rose-bg); color: #b0447a; }
+.pill-venues           { background: var(--peach-bg); color: #c05a2a; }
+
+/* Marks an invented listing on the card itself, so a sample is never mistaken
+   for one of the nine vendors named in the source document (spec §38). */
+.vendor-sample {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: rgba(7, 59, 76, 0.82);
+  color: var(--white);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* Demo availability, shown with its own demo tag (update spec §3). */
+.vendor-availability {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.avail-dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-subtle);
+}
+
+.avail-available .avail-dot        { background: var(--teal); }
+.avail-few-dates-left .avail-dot   { background: var(--orange); }
+.avail-booked-this-month .avail-dot { background: #c24236; }
+
+/* ----------------------------------------------------------------- body */
+
+.vendor-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* Absorbs the height difference between cards so the action row stays aligned. */
+  flex: 1 1 auto;
+  padding: 14px 14px 10px;
+  min-width: 0;
+}
+
+.vendor-name {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.3;
+  /* Reserves exactly two lines so one- and two-line names align identically. */
+  min-height: 2.6em;
+  color: var(--ink);
+}
+
+.vendor-rating-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 24px;
+}
+
+.vendor-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.vendor-meta li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.vendor-meta li svg {
+  flex: 0 0 auto;
+  color: var(--sky);
+}
+
+.vendor-meta li span {
+  min-width: 0;
+}
+
+.vendor-specialty {
+  margin-top: auto;
+  padding-top: 6px;
+  color: var(--navy);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* -------------------------------------------------------------- actions */
+
+.vendor-actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 0 14px 14px;
+}
+
+.vendor-actions .btn {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.vendor-actions .is-comparing {
+  border-color: var(--teal);
+  background: var(--mint-bg);
+  color: #0d8f7c;
+}
+
+@keyframes heart-pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* ----------------------------------------------------------- responsive */
+
+@media (max-width: 480px) {
+  .vendor-name { font-size: 0.95rem; }
+  .vendor-actions { grid-template-columns: 1fr 1fr; }
+  .vendor-actions .btn { padding-inline: 8px; font-size: 0.8rem; }
+}

@@ -1,0 +1,251 @@
+/* Shared layout for the two admin record dialogs (customer and vendor). */
+
+.ar-summary {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+  padding: var(--s-3);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--page);
+}
+
+.ar-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--mint-bg);
+  color: var(--teal);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.ar-thumb {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-md);
+  object-fit: cover;
+}
+
+.ar-summary-text {
+  min-width: 0;
+}
+
+.ar-name {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.ar-sub {
+  margin: 2px 0 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Definition list for read-only record fields. */
+.ar-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-3);
+  margin: var(--s-4) 0 0;
+}
+
+.ar-facts > div {
+  min-width: 0;
+}
+
+.ar-facts dt {
+  color: var(--text-subtle);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.ar-facts dd {
+  margin: 3px 0 0;
+  color: var(--text-body);
+  font-size: 0.93rem;
+}
+
+.ar-section-title {
+  margin: var(--s-5) 0 var(--s-2);
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* Compact booking list inside the customer dialog. */
+.ar-bookings {
+  display: grid;
+  gap: var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ar-booking {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+.ar-booking-text {
+  min-width: 0;
+}
+
+.ar-booking-vendor {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.ar-booking-meta {
+  margin: 2px 0 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.ar-empty {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.ar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+
+.ar-grid .field-wide {
+  grid-column: 1 / -1;
+}
+
+.ar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+
+.ar-note {
+  display: flex;
+  gap: var(--s-2);
+  align-items: flex-start;
+  margin: var(--s-4) 0 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.ar-note svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.ar-errors {
+  display: flex;
+  gap: var(--s-2);
+  align-items: flex-start;
+  margin-bottom: var(--s-3);
+  padding: var(--s-3);
+  border: 1px solid var(--coral);
+  border-radius: var(--r-md);
+  background: var(--coral-soft);
+  color: var(--ink);
+  font-size: 0.88rem;
+}
+
+.ar-errors ul {
+  margin: 4px 0 0;
+  padding-left: 1.1rem;
+}
+
+.ar-saved {
+  display: flex;
+  gap: var(--s-2);
+  align-items: center;
+  margin: var(--s-3) 0 0;
+  color: var(--teal);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+/* Status chooser in the vendor dialog. */
+.ar-status-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  /* The read-only note sits directly above and has no bottom margin. */
+  margin: var(--s-4) 0 0;
+  padding: 0;
+  border: none;
+}
+
+.ar-status-choice legend {
+  /* A legend is a flex item here, so it needs to claim the whole row. */
+  flex: 1 0 100%;
+  margin-bottom: var(--s-2);
+  padding: 0;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.ar-status-option {
+  display: inline-flex;
+  gap: var(--s-2);
+  align-items: center;
+  min-height: 40px;
+  padding: 0 var(--s-3);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--page);
+  color: var(--text-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease);
+}
+
+.ar-status-option:hover {
+  border-color: var(--teal);
+}
+
+.ar-status-option:has(input:checked) {
+  border-color: var(--teal);
+  background: var(--mint-bg);
+  color: var(--ink);
+}
+
+@media (max-width: 560px) {
+  .ar-facts,
+  .ar-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/*
+ * The pill is the tap target (a label toggles its own radio), so the dot only
+ * has to be large enough to read at a glance.
+ */
+.ar-status-option input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--teal);
+}
