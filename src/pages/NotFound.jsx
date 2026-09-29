@@ -6,9 +6,9 @@ import './Static.css';
 
 export default function NotFound() {
   return (
-    <div className="page">
+    <div className="page notfound-page">
       <header className="page-hero">
-        <Decor scope="page" />
+        <Decor scope="page" on="light" />
         <div className="container page-hero-inner notfound">
           <p className="notfound-code" aria-hidden="true">
             404

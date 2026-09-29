@@ -4,7 +4,7 @@
   /* Fills its grid/track cell so sibling cards always match height (spec §11). */
   height: 100%;
   min-width: 0;
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-lg);
   background: var(--white);
   box-shadow: var(--shadow-sm);
@@ -13,9 +13,11 @@
 }
 
 .vendor-card:hover {
-  transform: translateY(-4px);
-  border-color: #f3d9d4;
-  box-shadow: var(--shadow-md);
+  /* Small perspective lift — the card rises and barely scales, the image behind
+     it pushes forward. No rotation, per spec §10 ("small perspective movement"). */
+  transform: perspective(1000px) translateY(-6px) scale(1.012);
+  border-color: var(--gold-line-strong);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Keeps the hover affordance when tabbing to a control inside the card. */
@@ -41,7 +43,7 @@
 }
 
 .vendor-card:hover .vendor-img {
-  transform: scale(1.04);
+  transform: scale(1.06);
 }
 
 .vendor-heart {
@@ -240,4 +242,68 @@
   .vendor-name { font-size: 0.95rem; }
   .vendor-actions { grid-template-columns: 1fr 1fr; }
   .vendor-actions .btn { padding-inline: 8px; font-size: 0.8rem; }
+}
+
+/* ============================================================== on navy */
+
+/*
+ * Featured Vendors sits in a navy band, so the same card flips to a dark
+ * surface with a gold outline (spec §10). Only colour changes here — structure,
+ * spacing, fixed heights and hover behaviour are shared with the ivory card, so
+ * the two can never drift apart.
+ */
+.band-navy .vendor-card,
+.on-dark .vendor-card {
+  background: linear-gradient(168deg, rgba(20, 38, 66, 0.92), rgba(9, 20, 39, 0.96));
+  border-color: var(--gold-line);
+  box-shadow: var(--shadow-dark);
+}
+
+.band-navy .vendor-card:hover,
+.on-dark .vendor-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 34px 70px rgba(2, 8, 20, 0.6);
+}
+
+.band-navy .vendor-card:focus-within,
+.on-dark .vendor-card:focus-within {
+  border-color: var(--gold-bright);
+}
+
+.band-navy .vendor-media,
+.on-dark .vendor-media { background: var(--navy-600); }
+
+/* global.css recolours h3 inside .on-dark; named here so the two stay in step. */
+.band-navy .vendor-name,
+.on-dark .vendor-name { color: #fffaf0; }
+
+.band-navy .vendor-meta li,
+.on-dark .vendor-meta li { color: var(--on-navy-subtle); }
+
+.band-navy .vendor-specialty,
+.on-dark .vendor-specialty { color: var(--on-navy-muted); }
+
+.band-navy .vendor-availability,
+.on-dark .vendor-availability { color: var(--on-navy-subtle); }
+
+/* The heart sits on the photograph, so it keeps its ivory chip; the compare
+   button is on the card body and needs the dark-surface secondary treatment. */
+.band-navy .vendor-actions .btn-secondary,
+.on-dark .vendor-actions .btn-secondary {
+  border-color: var(--gold-line-dark);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--on-navy);
+}
+
+.band-navy .vendor-actions .btn-secondary:hover,
+.on-dark .vendor-actions .btn-secondary:hover {
+  border-color: var(--gold);
+  background: var(--gold-soft-dark);
+}
+
+.band-navy .vendor-actions .is-comparing,
+.on-dark .vendor-actions .is-comparing {
+  border-color: var(--teal);
+  background: rgba(20, 184, 166, 0.16);
+  color: #5fe0cd;
 }

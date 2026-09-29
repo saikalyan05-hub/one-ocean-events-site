@@ -12,7 +12,7 @@
   align-items: center;
   gap: var(--s-3);
   padding-bottom: var(--s-3);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--gold-line);
 }
 
 .chat-avatar {
@@ -21,6 +21,8 @@
   height: 46px;
   border-radius: 50%;
   object-fit: cover;
+  /* Gold ring rather than a bare crop, the same detail the medallions use. */
+  box-shadow: 0 0 0 1px var(--gold-line-strong), 0 0 0 4px var(--gold-soft);
 }
 
 .chat-head-text { min-width: 0; }
@@ -56,12 +58,13 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: var(--s-3);
-  border-radius: var(--r-md);
-  background: var(--page);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-lg);
+  background: var(--cream);
 }
 
 .chat-log:focus-visible {
-  outline: 3px solid var(--coral);
+  outline: 3px solid var(--gold-deep);
   outline-offset: 2px;
 }
 
@@ -98,14 +101,21 @@
   line-height: 1.5;
 }
 
+/*
+ * Own messages take the navy the site uses for its dark surfaces; the hot coral
+ * gradient this replaced was the loudest thing on screen and it sat inside a
+ * dialog. The vendor answers on white inside a gold hairline, so the two voices
+ * stay easy to tell apart without either shouting.
+ */
 .chat-msg-me .chat-bubble {
   border-bottom-right-radius: 4px;
-  background: linear-gradient(135deg, var(--coral), var(--orange));
-  color: var(--white);
+  background: linear-gradient(140deg, var(--navy-700), var(--navy-900));
+  color: var(--on-navy);
+  box-shadow: 0 6px 16px rgba(8, 19, 39, 0.22);
 }
 
 .chat-msg-them .chat-bubble {
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
   border-bottom-left-radius: 4px;
   background: var(--white);
   color: var(--text-body);

@@ -63,6 +63,16 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  /*
+   * Page transition key (update spec §12). Keying the wrapper by the *first*
+   * path segment replays a short fade whenever the visitor moves between
+   * top-level areas, while leaving it untouched as they navigate within a
+   * dashboard — so the dashboard's sidebar and topbar stay mounted (§23) and
+   * only the panel inside swaps.
+   */
+  const { pathname } = useLocation();
+  const routeKey = `/${pathname.split('/')[1] ?? ''}`;
+
   return (
     <AppProvider>
       <ScrollToTop />
@@ -73,6 +83,7 @@ export default function App() {
       <Header />
 
       <main id="main" tabIndex={-1}>
+        <div className="route-fade" key={routeKey}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/vendors" element={<Vendors />} />
@@ -108,6 +119,7 @@ export default function App() {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </div>
       </main>
 
       <Footer />

@@ -31,7 +31,7 @@ export default function About() {
   return (
     <div className="page">
       <header className="page-hero">
-        <Decor scope="page" />
+        <Decor scope="page" on="light" />
         <div className="container page-hero-inner">
           <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: 'About Us' }]} />
           <h1 className="page-title">
@@ -82,50 +82,55 @@ export default function About() {
           </ul>
         </section>
 
-        <section className="about-panel" id="vendors">
-          <h2 className="section-title">For vendors</h2>
-          <p>
-            If you run a decoration, catering or entertainment business and want to be listed, we
-            want to hear from you. Listing will be free while we are building out the city, and you
-            keep full control of your own pricing and availability.
-          </p>
-          <p className="about-panel-note">
-            <Icon name="info" size={15} />
-            <span>
-              Vendor onboarding is not part of this demo — there is no form to submit yet.
-            </span>
-          </p>
-        </section>
+        {/* Three short reference sections. As bare prose they ran the full width
+            of the page and read as an unformatted document below the values row;
+            as panels they keep the measure short and stay part of the system. */}
+        <div className="about-panels">
+          <section className="about-panel" id="vendors">
+            <h2 className="section-title">For vendors</h2>
+            <p>
+              If you run a decoration, catering or entertainment business and want to be listed, we
+              want to hear from you. Listing will be free while we are building out the city, and you
+              keep full control of your own pricing and availability.
+            </p>
+            <p className="about-panel-note">
+              <Icon name="info" size={15} />
+              <span>
+                Vendor onboarding is not part of this demo — there is no form to submit yet.
+              </span>
+            </p>
+          </section>
 
-        <section className="about-panel" id="contact">
-          <h2 className="section-title">Contact</h2>
-          <p>
-            This prototype has no live inbox. In production, enquiries reach the team here and every
-            listed vendor gets their own verified contact route.
-          </p>
-          <ul className="contact-list">
-            <li>
-              <Icon name="pin" size={16} /> Hyderabad, Telangana
-            </li>
-            <li>
-              <Icon name="chat" size={16} /> Vendor chat is available inside each vendor profile
-            </li>
-          </ul>
-        </section>
+          <section className="about-panel" id="contact">
+            <h2 className="section-title">Contact</h2>
+            <p>
+              This prototype has no live inbox. In production, enquiries reach the team here and every
+              listed vendor gets their own verified contact route.
+            </p>
+            <ul className="contact-list">
+              <li>
+                <Icon name="pin" size={16} /> Hyderabad, Telangana
+              </li>
+              <li>
+                <Icon name="chat" size={16} /> Vendor chat is available inside each vendor profile
+              </li>
+            </ul>
+          </section>
 
-        <section className="about-panel" id="legal">
-          <h2 className="section-title">Legal &amp; data</h2>
-          <p>
-            Privacy, Terms and Refund policies are not drafted for this prototype. Nothing you enter
-            here is transmitted or stored on a server — the wishlist, bookings, chat and sign-in all
-            live in your own browser and can be removed by clearing site data.
-          </p>
-          <p>
-            Vendor names, categories, years of experience, event scale and specialties come from the
-            supplied source data. Ratings, review counts, prices, verification badges, services and
-            photography are placeholder demo values and are labelled as such throughout the site.
-          </p>
-        </section>
+          <section className="about-panel about-panel-wide" id="legal">
+            <h2 className="section-title">Legal &amp; data</h2>
+            <p>
+              Privacy, Terms and Refund policies are not drafted for this prototype. Nothing you enter
+              here is transmitted or stored on a server — the wishlist, bookings, chat and sign-in all
+              live in your own browser and can be removed by clearing site data.
+            </p>
+            <p>
+              Vendor names, categories, years of experience, event scale and specialties come from the
+              supplied source data. Ratings, review counts, prices, verification badges, services and
+              photography are placeholder demo values and are labelled as such throughout the site.
+            </p>
+          </section>
+        </div>
 
         <section className="cta-band">
           <div>

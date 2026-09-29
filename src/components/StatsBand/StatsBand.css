@@ -1,0 +1,122 @@
+/**
+ * Trust statistics — four gold-rimmed panels.
+ *
+ * Designed to sit on either surface: the tokens it uses (--gold-line, the
+ * inherited text colour) already flip inside .band-navy / .on-dark, so the same
+ * markup reads correctly on ivory and on navy.
+ */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.4vw, 24px);
+}
+
+.stat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: clamp(20px, 2.2vw, 30px) 16px;
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease),
+    border-color 220ms var(--ease);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-line-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-line);
+  background: var(--champagne);
+  color: var(--gold-deep);
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 1.2rem + 1.5vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stat-label {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Small honesty marker on the two illustrative figures. */
+.stat-demo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 2px 7px;
+  border-radius: var(--r-pill);
+  background: var(--sand);
+  color: var(--gold-deep);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------- on navy */
+
+.band-navy .stat-card,
+.on-dark .stat-card {
+  background: linear-gradient(168deg, rgba(20, 38, 66, 0.72), rgba(9, 20, 39, 0.86));
+  border-color: var(--gold-line-dark);
+  box-shadow: var(--shadow-dark-sm);
+}
+
+.band-navy .stat-card:hover,
+.on-dark .stat-card:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-dark);
+}
+
+.band-navy .stat-icon,
+.on-dark .stat-icon {
+  background: var(--gold-soft-dark);
+  color: var(--gold-bright);
+}
+
+.band-navy .stat-label,
+.on-dark .stat-label { color: var(--on-navy-muted); }
+
+.band-navy .stat-demo,
+.on-dark .stat-demo {
+  background: var(--gold-soft-dark);
+  color: var(--gold-bright);
+}
+
+/* ---------------------------------------------------------- responsive */
+
+@media (max-width: 767px) {
+  .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 400px) {
+  .stat-icon { width: 40px; height: 40px; }
+  .stat-label { font-size: 0.79rem; }
+}

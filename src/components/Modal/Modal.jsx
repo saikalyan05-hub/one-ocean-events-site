@@ -25,6 +25,10 @@ export default function Modal({
   footer,
   size = 'md',
   labelledBy,
+  /* Extra class on the panel, for dialogs that restyle their own chrome. */
+  className = '',
+  /* Decorative layer painted inside the header, behind the title. */
+  crown = null,
 }) {
   const panelRef = useRef(null);
   const previouslyFocused = useRef(null);
@@ -114,7 +118,7 @@ export default function Modal({
     >
       <div
         ref={panelRef}
-        className={`modal-panel modal-${size}`}
+        className={`modal-panel modal-${size}${className ? ` ${className}` : ''}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? titleId : labelledBy}
@@ -122,6 +126,7 @@ export default function Modal({
       >
         {title && (
           <header className="modal-head">
+            {crown}
             <div className="modal-head-text">
               <h2 id={titleId} className="modal-title">
                 {title}

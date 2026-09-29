@@ -2,10 +2,10 @@
 
 .ar-summary {
   display: flex;
-  gap: var(--s-3);
+  gap: var(--s-4);
   align-items: center;
-  padding: var(--s-3);
-  border: 1px solid var(--line);
+  padding: var(--s-4);
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-lg);
   background: var(--page);
 }
@@ -14,21 +14,24 @@
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  background: var(--mint-bg);
-  color: var(--teal);
-  font-size: 1.05rem;
+  background: var(--grad-gold);
+  color: var(--navy-900);
+  font-size: 1.15rem;
   font-weight: 700;
+  box-shadow: var(--shadow-xs);
+  border: 2px solid var(--white);
 }
 
 .ar-thumb {
   flex: 0 0 auto;
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   border-radius: var(--r-md);
   object-fit: cover;
+  border: 1px solid var(--gold-line);
 }
 
 .ar-summary-text {
@@ -38,12 +41,12 @@
 .ar-name {
   margin: 0;
   color: var(--ink);
-  font-size: 1.02rem;
+  font-size: 1.08rem;
   font-weight: 700;
 }
 
 .ar-sub {
-  margin: 2px 0 0;
+  margin: 3px 0 0;
   color: var(--text-muted);
   font-size: 0.85rem;
 }
@@ -58,26 +61,32 @@
 
 .ar-facts > div {
   min-width: 0;
+  padding: var(--s-2) var(--s-3);
+  background: var(--page);
+  border-radius: var(--r-md);
+  border: 1px solid var(--gold-line);
 }
 
 .ar-facts dt {
-  color: var(--text-subtle);
-  font-size: 0.76rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  color: var(--gold-deep);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .ar-facts dd {
   margin: 3px 0 0;
-  color: var(--text-body);
+  color: var(--ink);
   font-size: 0.93rem;
+  font-weight: 500;
 }
 
 .ar-section-title {
   margin: var(--s-5) 0 var(--s-2);
   color: var(--ink);
-  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
   font-weight: 700;
 }
 
@@ -95,9 +104,15 @@
   gap: var(--s-3);
   align-items: center;
   justify-content: space-between;
-  padding: var(--s-2) var(--s-3);
-  border: 1px solid var(--line);
+  padding: var(--s-3);
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-md);
+  background: var(--white);
+  transition: border-color var(--t-fast) var(--ease);
+}
+
+.ar-booking:hover {
+  border-color: var(--gold);
 }
 
 .ar-booking-text {
@@ -107,12 +122,12 @@
 .ar-booking-vendor {
   margin: 0;
   color: var(--ink);
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   font-weight: 600;
 }
 
 .ar-booking-meta {
-  margin: 2px 0 0;
+  margin: 3px 0 0;
   color: var(--text-muted);
   font-size: 0.82rem;
 }
@@ -138,6 +153,8 @@
   flex-wrap: wrap;
   gap: var(--s-2);
   margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--gold-line);
 }
 
 .ar-note {
@@ -153,6 +170,7 @@
 .ar-note svg {
   flex: 0 0 auto;
   margin-top: 2px;
+  color: var(--gold-deep);
 }
 
 .ar-errors {
@@ -161,9 +179,9 @@
   align-items: flex-start;
   margin-bottom: var(--s-3);
   padding: var(--s-3);
-  border: 1px solid var(--coral);
+  border: 1px solid rgba(194, 66, 54, 0.4);
   border-radius: var(--r-md);
-  background: var(--coral-soft);
+  background: #fff5f4;
   color: var(--ink);
   font-size: 0.88rem;
 }
@@ -178,7 +196,7 @@
   gap: var(--s-2);
   align-items: center;
   margin: var(--s-3) 0 0;
-  color: var(--teal);
+  color: #1a6b4a;
   font-size: 0.88rem;
   font-weight: 600;
 }
@@ -188,19 +206,18 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-2);
-  /* The read-only note sits directly above and has no bottom margin. */
   margin: var(--s-4) 0 0;
   padding: 0;
   border: none;
 }
 
 .ar-status-choice legend {
-  /* A legend is a flex item here, so it needs to claim the whole row. */
   flex: 1 0 100%;
   margin-bottom: var(--s-2);
   padding: 0;
   color: var(--ink);
-  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
   font-weight: 700;
 }
 
@@ -208,9 +225,9 @@
   display: inline-flex;
   gap: var(--s-2);
   align-items: center;
-  min-height: 40px;
-  padding: 0 var(--s-3);
-  border: 1px solid var(--line);
+  min-height: 42px;
+  padding: 0 var(--s-4);
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-pill);
   background: var(--page);
   color: var(--text-body);
@@ -219,17 +236,22 @@
   cursor: pointer;
   transition:
     border-color var(--t-fast) var(--ease),
-    background var(--t-fast) var(--ease);
+    background var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease);
 }
 
 .ar-status-option:hover {
-  border-color: var(--teal);
+  border-color: var(--gold);
 }
 
+/* Gold, matching the dashboard's active nav pill and the header's active
+   route — a navy fill here was the one dark chip on an otherwise white
+   dialog, which read as a selection from a different design. */
 .ar-status-option:has(input:checked) {
-  border-color: var(--teal);
-  background: var(--mint-bg);
-  color: var(--ink);
+  border-color: transparent;
+  background: var(--grad-gold);
+  color: #3a2a0c;
+  box-shadow: var(--shadow-xs);
 }
 
 @media (max-width: 560px) {
@@ -247,5 +269,10 @@
   width: 18px;
   height: 18px;
   margin: 0;
-  accent-color: var(--teal);
+  accent-color: var(--gold);
+}
+
+/* A gold dot on the gold pill is invisible, so the checked radio inverts. */
+.ar-status-option:has(input:checked) input {
+  accent-color: var(--navy-900);
 }

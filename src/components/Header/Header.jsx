@@ -15,7 +15,7 @@ const NAV_ITEMS = [
 ];
 
 export default function Header() {
-  const { wishlist, compare, user, location: city, changeLocation, openModal } = useApp();
+  const { wishlist, compare, user, location: city, changeLocation, openModal, unreadNotifications } = useApp();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const routeLocation = useLocation();
@@ -92,6 +92,23 @@ export default function Header() {
               <Icon name="heart" size={19} />
             </button>
             {wishlist.length > 0 && <span className="count-badge">{wishlist.length}</span>}
+          </span>
+
+          <span className="icon-btn-wrap header-notif">
+            <button
+              type="button"
+              className="icon-btn tip"
+              data-tip="Notifications"
+              aria-label={
+                unreadNotifications > 0
+                  ? `Notifications, ${unreadNotifications} unread`
+                  : 'Notifications'
+              }
+              onClick={() => navigate('/dashboard/notifications')}
+            >
+              <Icon name="bell" size={19} />
+            </button>
+            {unreadNotifications > 0 && <span className="count-badge">{unreadNotifications}</span>}
           </span>
 
           {/* The reference header carries only location, wishlist, profile and
@@ -189,6 +206,18 @@ export default function Header() {
                 <Icon name="heart" size={17} /> Wishlist
               </span>
               <span className="mobile-count">{wishlist.length}</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/notifications" className="mobile-link">
+              <span className="mobile-link-lead">
+                <Icon name="bell" size={17} /> Notifications
+              </span>
+              {unreadNotifications > 0 ? (
+                <span className="mobile-count">{unreadNotifications}</span>
+              ) : (
+                <Icon name="chevronRight" size={16} />
+              )}
             </NavLink>
           </li>
           <li>

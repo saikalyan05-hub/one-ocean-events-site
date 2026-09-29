@@ -5,6 +5,11 @@ import Decor from '../components/Hero/Decor';
 import './pages.css';
 import './Static.css';
 
+/*
+ * The five stages the spec names, in the order the product actually runs them.
+ * Every line describes something this build does — nothing here promises a
+ * service the demo cannot perform (see the FAQ below).
+ */
 const STEPS = [
   {
     icon: 'compass',
@@ -16,13 +21,25 @@ const STEPS = [
     icon: 'scale',
     tone: 'lavender',
     title: 'Compare',
-    text: 'Line up to three vendors side by side on experience, scale, specialty and price before you decide.',
+    text: 'Line up to three vendors side by side on experience, scale and specialty.',
+  },
+  {
+    icon: 'heart',
+    tone: 'rose',
+    title: 'Choose',
+    text: 'Save the ones you like to your wishlist and narrow the list in your own time.',
   },
   {
     icon: 'calendar',
     tone: 'mint',
     title: 'Book',
     text: 'Send your date, guest count and notes in one request, then track it under My Bookings.',
+  },
+  {
+    icon: 'sparkle',
+    tone: 'yellow',
+    title: 'Celebrate',
+    text: 'Requests, notes and saved vendors stay in one list, so the day runs off one plan.',
   },
 ];
 
@@ -53,27 +70,29 @@ export default function HowItWorks() {
   return (
     <div className="page">
       <header className="page-hero">
-        <Decor scope="page" />
+        <Decor scope="page" on="light" />
         <div className="container page-hero-inner">
           <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: 'How It Works' }]} />
           <h1 className="page-title">
             How it <span className="accent">works</span>
           </h1>
           <p className="page-lede">
-            Three steps from a blank guest list to a vendor who has your date.
+            Five stages from a blank guest list to a vendor who has your date.
           </p>
         </div>
       </header>
 
       <div className="container">
+        {/* A timeline rather than five loose cards: the gold rule running between
+            the medallions is what says these are stages of one journey. */}
         <ol className="steps">
           {STEPS.map((step, i) => (
-            <li key={step.title} className={`step-card tone-${step.tone}`}>
-              <span className="step-number" aria-hidden="true">
-                {i + 1}
-              </span>
-              <span className="step-icon" aria-hidden="true">
-                <Icon name={step.icon} size={26} />
+            <li key={step.title} className={`step tone-${step.tone}`}>
+              <span className="step-mark" aria-hidden="true">
+                <span className="step-icon">
+                  <Icon name={step.icon} size={24} />
+                </span>
+                <span className="step-number">{i + 1}</span>
               </span>
               <h2 className="step-title">{step.title}</h2>
               <p className="step-text">{step.text}</p>

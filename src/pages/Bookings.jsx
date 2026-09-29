@@ -7,7 +7,7 @@ export default function Bookings() {
   return (
     <div className="page">
       <header className="page-hero">
-        <Decor scope="page" />
+        <Decor scope="page" on="light" />
         <div className="container page-hero-inner">
           <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: 'My Bookings' }]} />
           <h1 className="page-title">

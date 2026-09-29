@@ -1,9 +1,20 @@
+/*
+ * A film stage, so it is dark: a cinema screen that is pale blue reads as a
+ * failed embed rather than a player waiting to start. Navy also lets the gold
+ * play medallion carry the frame on its own, without a second accent.
+ */
 .video-frame {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
   place-items: center;
   aspect-ratio: 16 / 9;
+  border: 1px solid var(--gold-line-dark);
   border-radius: var(--r-lg);
-  background: linear-gradient(135deg, var(--blue-bg), var(--lavender-bg));
+  background:
+    radial-gradient(640px 320px at 50% 30%, rgba(193, 154, 75, 0.16), transparent 68%),
+    linear-gradient(150deg, var(--navy-700), var(--navy-900));
   text-align: center;
 }
 
@@ -23,22 +34,30 @@
   height: 76px;
   margin-bottom: var(--s-2);
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--coral), var(--orange));
-  color: var(--white);
-  box-shadow: var(--shadow-md);
+  background: var(--grad-gold);
+  color: #3a2a0c;
+  /* Two soft rings standing in for the halo a real player would cast. */
+  box-shadow:
+    0 0 0 8px rgba(193, 154, 75, 0.14),
+    0 0 0 20px rgba(193, 154, 75, 0.07),
+    0 14px 34px rgba(6, 15, 32, 0.5);
 }
+
+/* The play glyph is optically left of centre inside a circle. */
+.video-play svg { transform: translateX(2px); }
 
 .video-title {
   margin: 0;
   font-family: var(--font-display);
   font-size: 1.4rem;
-  color: var(--ink);
+  color: var(--on-navy);
 }
 
 .video-text {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--on-navy-muted);
   font-size: 0.95rem;
+  line-height: 1.65;
 }
 
 .video-note {

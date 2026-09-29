@@ -16,33 +16,44 @@
   gap: var(--s-2);
 }
 
+/*
+ * Navy glass rather than a white card. A toast can appear over the ivory bands
+ * or over the navy vendor band, and a white plate disappeared into the former;
+ * the dark plate reads on both. The status colour stays on the left rule and
+ * the icon only — the surface itself never changes colour.
+ */
 .toast {
   display: flex;
   align-items: flex-start;
   gap: var(--s-3);
   padding: 13px 14px;
-  border: 1px solid var(--line);
-  border-left: 4px solid var(--navy);
-  border-radius: var(--r-md);
-  background: var(--white);
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gold-line-dark);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--r-lg);
+  background: linear-gradient(140deg, rgba(16, 33, 62, 0.94), rgba(8, 19, 39, 0.96));
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  color: var(--on-navy);
+  box-shadow: 0 18px 40px rgba(6, 15, 32, 0.42);
   pointer-events: auto;
   animation: toast-in var(--t-base) var(--ease);
 }
 
-.toast-success { border-left-color: var(--teal); }
-.toast-warning { border-left-color: var(--orange); }
-.toast-default { border-left-color: var(--sky); }
+/* Lightened for contrast against navy — the light-surface hues of the same
+   names sit too close to the background to register as a status. */
+.toast-success { border-left-color: #62d4ba; }
+.toast-warning { border-left-color: #f5b567; }
+.toast-default { border-left-color: var(--gold); }
 
 .toast-icon {
   flex: 0 0 auto;
   margin-top: 2px;
-  color: var(--navy);
+  color: var(--gold-bright);
 }
 
-.toast-success .toast-icon { color: var(--teal); }
-.toast-warning .toast-icon { color: var(--orange); }
-.toast-default .toast-icon { color: var(--sky); }
+.toast-success .toast-icon { color: #62d4ba; }
+.toast-warning .toast-icon { color: #f5b567; }
+.toast-default .toast-icon { color: var(--gold-bright); }
 
 .toast-text {
   flex: 1 1 auto;
@@ -62,13 +73,14 @@
   border: 0;
   border-radius: 50%;
   background: transparent;
-  color: var(--text-subtle);
+  color: var(--on-navy-muted);
   cursor: pointer;
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
 
 .toast-dismiss:hover {
-  background: var(--line);
-  color: var(--ink);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--gold-bright);
 }
 
 @keyframes toast-in {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import Icon from '../common/Icon';
+import Decor from '../Hero/Decor';
 import Modal from './Modal';
 import './LoginModal.css';
 
@@ -50,6 +51,10 @@ export default function LoginModal({ onClose }) {
   return (
     <Modal
       size="sm"
+      /* Blush crown with a small floral frame over an ivory form (spec §16).
+         Presentation only — the sign-in handler below is untouched. */
+      className="login-modal"
+      crown={<Decor scope="auth" on="light" />}
       onClose={onClose}
       title="Welcome to One Ocean Events"
       subtitle="Sign in to save vendors and track your bookings"

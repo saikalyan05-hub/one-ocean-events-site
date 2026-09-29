@@ -12,8 +12,19 @@
   margin: calc(var(--s-6) * -1) calc(var(--s-6) * -1) 0;
   height: 260px;
   overflow: hidden;
-  border-radius: var(--r-lg) var(--r-lg) 0 0;
-  background: var(--blue-bg);
+  border-bottom: 1px solid var(--gold-line);
+  background: var(--cream);
+}
+
+/* A short navy wash at the foot of the photo so the pill and the gold hairline
+   both keep their edge over a bright image. */
+.vm-hero::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 40%;
+  background: linear-gradient(transparent, rgba(8, 19, 39, 0.3));
+  pointer-events: none;
 }
 
 .vm-hero-img {
@@ -22,10 +33,20 @@
   object-fit: cover;
 }
 
-.vm-pill {
+/*
+ * The shared vendor pill is anchored bottom-left on a card; here it moves to the
+ * top. The bottom offset has to be released explicitly: left alone it stays set,
+ * the box stretches the full height of the photo and the tint becomes a giant
+ * lozenge down the left edge.
+ */
+/* Scoped to the hero so it out-specifies .vendor-pill, which is defined in the
+   card stylesheet and may load after this one. */
+.vm-hero .vm-pill {
   position: absolute;
   top: var(--s-4);
+  bottom: auto;
   left: var(--s-4);
+  border: 1px solid var(--gold-line);
 }
 
 /* ------------------------------------------------------------- head */
@@ -114,9 +135,9 @@
   margin: 0;
   padding: var(--s-4);
   list-style: none;
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--page);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-lg);
+  background: linear-gradient(170deg, var(--white), var(--cream));
 }
 
 .vm-facts li {
@@ -185,8 +206,9 @@
 
 .vm-portfolio li {
   overflow: hidden;
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-md);
-  background: var(--blue-bg);
+  background: var(--cream);
   aspect-ratio: 4 / 3;
 }
 
@@ -207,7 +229,8 @@
 
 .vm-review {
   padding: var(--s-4);
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
+  border-left: 3px solid var(--gold-line-strong);
   border-radius: var(--r-md);
   background: var(--white);
 }
@@ -242,8 +265,8 @@
   /* Sits on the modal background so cards scrolling under it stay legible. */
   margin: 0 calc(var(--s-6) * -1) calc(var(--s-6) * -1);
   padding: var(--s-4) var(--s-6);
-  border-top: 1px solid var(--line);
-  background: var(--white);
+  border-top: 1px solid var(--gold-line);
+  background: var(--cream);
 }
 
 .vm-actions .btn { flex: 1 1 160px; }

@@ -1,13 +1,28 @@
+/*
+ * The tray is the header's opposite number at the foot of the screen, so it
+ * takes the same treatment: white glass under a gold hairline.
+ *
+ * On the navy build this bar was navy, which worked because it separated from
+ * the ivory bands by tone. On the white build that made it the one permanent
+ * dark slab on every route — visible in every screenshot, at the bottom of
+ * every page. It separates the way the header does instead: a gold rim, an
+ * inner white highlight, and a wide upward cast.
+ */
 .compare-bar {
   position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: var(--z-sticky-bar);
-  border-top: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 -8px 26px rgba(7, 59, 76, 0.1);
+  border-top: 1px solid var(--gold-line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 250, 244, 0.97));
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  color: var(--ink);
+  box-shadow:
+    0 -2px 8px rgba(110, 76, 55, 0.06),
+    0 -16px 44px rgba(96, 66, 48, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
   animation: compare-in var(--t-slow) var(--ease);
   /* Clears the iOS home indicator. */
   padding-bottom: env(safe-area-inset-bottom, 0);
@@ -23,6 +38,12 @@
 
 /* ---------------------------------------------------------------- slots */
 
+/*
+ * The scrollbar is hidden, so without a fade the third chip just ends
+ * mid-thumbnail at the container edge and reads as a clipping bug rather than
+ * as more content to the right. The mask is unconditional: when the chips fit,
+ * the faded 26px falls on empty tray, so there is nothing to soften.
+ */
 .compare-slots {
   display: flex;
   align-items: stretch;
@@ -30,6 +51,8 @@
   min-width: 0;
   overflow-x: auto;
   scrollbar-width: none;
+  mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent);
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent);
 }
 
 .compare-slots::-webkit-scrollbar { display: none; }
@@ -46,14 +69,15 @@
 }
 
 .compare-slot.is-filled {
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
   background: var(--white);
+  box-shadow: var(--shadow-xs);
 }
 
 .compare-slot.is-empty {
   justify-content: center;
   padding: 8px;
-  border: 1px dashed var(--line);
+  border: 1px dashed var(--gold-line-strong);
   color: var(--text-subtle);
   font-size: 0.82rem;
 }
@@ -62,6 +86,7 @@
   flex: 0 0 auto;
   width: 40px;
   height: 40px;
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-sm);
   object-fit: cover;
 }
@@ -93,7 +118,7 @@
   padding: 0;
   border: none;
   background: none;
-  color: var(--text-muted);
+  color: var(--text-subtle);
   cursor: pointer;
 }
 
@@ -102,7 +127,7 @@
   position: absolute;
   inset: 3px;
   border-radius: 50%;
-  background: var(--page);
+  background: rgba(58, 42, 12, 0.08);
   transition: background var(--t-fast) var(--ease);
 }
 
@@ -112,11 +137,11 @@
 }
 
 .compare-slot-remove:hover::before {
-  background: var(--coral-soft);
+  background: var(--gold-soft);
 }
 
 .compare-slot-remove:hover {
-  color: var(--coral);
+  color: var(--gold-deep);
 }
 
 /* -------------------------------------------------------------- actions */
@@ -135,7 +160,7 @@
   white-space: nowrap;
 }
 
-.compare-count strong { color: var(--ink); }
+.compare-count strong { color: var(--gold-deep); }
 
 @keyframes compare-in {
   from { transform: translateY(100%); }
@@ -173,6 +198,20 @@
   .compare-slot.is-empty { display: none; }
 
   .compare-clear { display: none; }
+
+  /*
+   * At 132px a name like "Savyasachi caterers" has about nine characters of
+   * room per line, so `overflow-wrap: anywhere` was splitting it as
+   * "Savyasach / i caterers". One line with an ellipsis says the same thing
+   * and reads as a deliberate truncation rather than a layout fault — the
+   * full name is one tap away in the comparison itself.
+   */
+  .compare-slot-name {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

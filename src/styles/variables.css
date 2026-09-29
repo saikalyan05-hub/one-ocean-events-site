@@ -1,19 +1,130 @@
 /**
- * Design tokens — light theme only (spec §4 / §23).
- * There is deliberately no dark-mode block: the product is light-theme only.
+ * ONE OCEAN EVENTS — DESIGN TOKENS
+ * ================================
+ * One royal luxury system on a WHITE canvas: pearl and blush surfaces, deep
+ * navy ink, champagne gold detail, rose-pink accent.
+ * Light theme only — there is deliberately no dark-mode block.
+ *
+ * Reading order:
+ *   1. Brand palette        — the raw hues
+ *   2. Navy ramp            — ink, and the few dark contrast blocks (footer/CTA)
+ *   2b. Light ramp          — pearl → ivory → blush: what the site is *made of*
+ *   3. Gold                 — the accent metal, used sparingly
+ *   4. Semantic surfaces    — what a component should actually reach for
+ *   5. Type / space / radius / elevation / motion / layering
+ *
+ * Rule of restraint: the page is white. Gold rims, underlines and marks — it
+ * never fills a large area. Navy is ink first and a surface only for the
+ * footer and deliberate contrast blocks. Pink is the single warm highlight.
  */
 
 :root {
-  /* Brand palette */
-  --ink: #073b4c;
-  --navy: #0b5263;
+  /* ------------------------------------------------------- 1. brand palette */
   --coral: #ff6b5e;
   --orange: #ff9f43;
   --teal: #18b7a0;
   --sky: #49b6e8;
   --lavender: #b68cff;
+  --rose: #e0559f;         /* legacy alias — prefer --pink below */
+  --burgundy: #7c2547;
+  --blush: #f5c9d6;
 
-  /* Soft card backgrounds */
+  /* Rose-pink: the headline's "Here", section-title second words, hearts and
+     the small punctuation of the brand. Deliberately one hue, used often. */
+  --pink: #ec3f8f;
+  --pink-deep: #c9276f;    /* text-safe on pearl */
+  --pink-bright: #ff74b1;
+  --grad-pink: linear-gradient(103deg, #ff82b8 0%, #ee4092 44%, #d22a78 100%);
+  --pink-line: rgba(236, 63, 143, 0.26);
+  --pink-tint: rgba(236, 63, 143, 0.08);
+
+  /* Logo hues — the two interlocking rings. */
+  --brand-crimson: #e8174c;
+  --brand-blue: #8fc4ee;
+
+  /* ------------------------------------------------ 2. navy ramp (ink + dark) */
+  /* Primarily INK. As a surface these appear only in the footer and in
+     deliberate contrast blocks — never as the page's default background. */
+  --navy-900: #050d1f;     /* deepest — vignette edges */
+  --navy-800: #081327;     /* hero base */
+  --navy-700: #0b1a33;     /* primary dark surface */
+  --navy-600: #102340;     /* raised dark card */
+  --navy-500: #16304f;     /* hairline / divider on dark */
+  --navy-400: #22456c;     /* muted text on dark */
+
+  /* Legacy aliases — kept so existing components keep resolving. */
+  --ink: #081327;          /* headline ink on light surfaces */
+  --navy: #143257;         /* body ink on light surfaces */
+
+  /* Text tones for use *on* navy. */
+  --on-navy: #f6efe2;      /* primary text on dark */
+  --on-navy-muted: #c3cede; /* secondary text on dark */
+  --on-navy-subtle: #8fa0b8;
+
+  /* ------------------------------------------ 2b. light ramp (the whole site) */
+  /*
+   * Ordered lightest → warmest. `--pearl` is the page; everything else is a
+   * band or a card wash. The warmth climbs very slowly on purpose: read as a
+   * sequence these are almost white, which is what keeps the site from looking
+   * beige while still never looking clinical.
+   */
+  --pearl: #fffdfc;        /* the page — warm white with a breath of rose */
+  --ivory: #fffaf4;        /* ivory band */
+  --cream: #fff7ee;        /* cream band */
+  --champagne: #fdf1df;    /* champagne highlight */
+  --blush-50: #fff8fa;     /* the faintest rose wash */
+  --blush-100: #fff1f5;    /* blush band — the hero's base */
+  --petal: #ffe8ef;        /* deepest blush before it becomes pink */
+  --sand: #f6ecdc;         /* deepest warm neutral before gold */
+  --white: #ffffff;
+
+  /* ----------------------------------------------------------------- 3. gold */
+  --gold-deep: #8f6725;    /* antique gold — text-safe on ivory */
+  --gold: #c19a4b;         /* the accent workhorse */
+  --gold-bright: #e3c887;  /* highlight / light catch */
+  --gold-pale: #f3e6c6;    /* champagne tint */
+
+  /* Metal gradients and rims — one source of truth for the gold look. */
+  --grad-gold: linear-gradient(155deg, #efd79a 0%, #cfa855 46%, #a97e30 100%);
+  --grad-gold-soft: linear-gradient(155deg, #f6ebc8, #ddc27a 60%, #c19a4b);
+  /* Gold *type* on a light band. `--grad-gold` starts at #efd79a, which is a
+     highlight on metal but unreadable as a letterform on pearl — this ramp
+     stays inside the range that holds contrast against white. */
+  --grad-gold-text: linear-gradient(103deg, #e0b968 0%, #c8973c 46%, #a87c2c 100%);
+  --grad-gold-line: linear-gradient(90deg, transparent, var(--gold) 22%, var(--gold-bright) 50%, var(--gold) 78%, transparent);
+
+  --gold-line-faint: rgba(193, 154, 75, 0.18);  /* band seams — barely there */
+  --gold-line: rgba(193, 154, 75, 0.42);        /* hairline rim on light */
+  --gold-line-strong: rgba(169, 126, 48, 0.62);
+  --gold-line-dark: rgba(214, 178, 106, 0.34);  /* hairline rim on navy */
+  --gold-soft: rgba(193, 154, 75, 0.12);        /* tint fill / hover on light */
+  --gold-soft-dark: rgba(214, 178, 106, 0.14);  /* tint fill / hover on navy */
+  --glow-gold: 0 0 0 1px rgba(193, 154, 75, 0.35), 0 10px 30px rgba(169, 126, 48, 0.16);
+  --glow-warm: radial-gradient(circle, rgba(255, 206, 130, 0.5), transparent 68%);
+
+  /* ---------------------------------------------------- 4. semantic surfaces */
+  --page: var(--pearl);
+  --surface: var(--white);
+  --surface-warm: var(--cream);
+  --surface-blush: var(--blush-100);
+  --surface-dark: var(--navy-700);
+  --line: #f0e6da;         /* warm hairline on light */
+  --line-soft: #f7eee6;    /* the quietest divider — inside cards */
+  --line-dark: rgba(255, 255, 255, 0.09);
+
+  --text: var(--ink);
+  --text-muted: #5c6b7e;
+  --text-subtle: #8b95a3;
+
+  /*
+   * The page's own atmosphere: two barely-there washes that sit behind every
+   * light band. Warm gold from the upper left, rose from the lower right —
+   * the same key as the reference photography, at a fraction of its strength.
+   */
+  --wash-gold: radial-gradient(1200px 560px at 10% -12%, rgba(214, 173, 100, 0.13), transparent 62%);
+  --wash-rose: radial-gradient(1000px 520px at 92% 108%, rgba(236, 63, 143, 0.07), transparent 60%);
+
+  /* Soft pastel card washes — the category tiles and status pills. */
   --mint-bg: #e9faf5;
   --peach-bg: #fff0e8;
   --lavender-bg: #f3eeff;
@@ -22,24 +133,43 @@
   --yellow-bg: #fff6e0;
   --rose-bg: #fdecf3;
 
-  /* Surfaces */
-  --page: #fffefc;
-  --line: #e8edf0;
-  --white: #ffffff;
-
-  /* Derived text tones */
-  --text: var(--ink);
-  --text-muted: #557280;
-  --text-subtle: #7b929d;
-
-  /* Accent tints used by pills, focus rings and hovers */
+  /* Accent tints for pills, focus rings and hovers. */
   --coral-soft: rgba(255, 107, 94, 0.12);
   --teal-soft: rgba(24, 183, 160, 0.12);
   --sky-soft: rgba(73, 182, 232, 0.12);
   --lavender-soft: rgba(182, 140, 255, 0.14);
   --orange-soft: rgba(255, 159, 67, 0.14);
+  --rose-soft: rgba(224, 85, 159, 0.12);
 
-  /* Radii */
+  /* Feedback */
+  --danger: #cf3b2f;
+  --danger-soft: rgba(207, 59, 47, 0.1);
+  --success: #0e7c6b;
+  --warning: #a8781a;
+
+  /* ------------------------------------------------------------ 5. typography */
+  --font-display: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  --font-ui: 'Manrope', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script: 'Caveat', 'Segoe Script', cursive;
+
+  /* Fluid type scale. Every size clamps, so nothing needs per-breakpoint rules. */
+  --fs-hero: clamp(2.6rem, 1.5rem + 4.4vw, 5rem);
+  --fs-h1: clamp(2rem, 1.35rem + 2.5vw, 3.3rem);
+  --fs-h2: clamp(1.65rem, 1.15rem + 2vw, 2.6rem);
+  --fs-h3: clamp(1.25rem, 1.02rem + 0.9vw, 1.65rem);
+  --fs-h4: clamp(1.05rem, 0.96rem + 0.4vw, 1.22rem);
+  --fs-lede: clamp(1rem, 0.95rem + 0.3vw, 1.14rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-caption: 0.78rem;
+  --fs-eyebrow: 0.75rem;
+
+  --lh-tight: 1.08;
+  --lh-snug: 1.25;
+  --lh-body: 1.6;
+  --ls-eyebrow: 0.26em;
+
+  /* ---------------------------------------------------------------- 6. radii */
   --r-sm: 10px;
   --r-md: 16px;
   --r-lg: 22px;
@@ -47,14 +177,28 @@
   --r-2xl: 36px;
   --r-pill: 999px;
 
-  /* Elevation */
-  --shadow-xs: 0 1px 2px rgba(7, 59, 76, 0.05);
-  --shadow-sm: 0 4px 14px rgba(7, 59, 76, 0.07);
-  --shadow-md: 0 10px 30px rgba(7, 59, 76, 0.09);
-  --shadow-lg: 0 20px 48px rgba(7, 59, 76, 0.13);
-  --shadow-ring: 0 0 0 3px rgba(255, 107, 94, 0.28);
+  /* ------------------------------------------------------------ 7. elevation */
+  /*
+   * Warm, studio-lit shadows — luxury shadows read champagne, never grey.
+   * On a white page these have to be *softer and wider* than they were on
+   * ivory: a tight dark cast on near-white reads as dirt, a broad diffuse one
+   * reads as light. Each is two casts — a close contact shadow and a wide
+   * ambient one — which is what separates a card from the page without
+   * drawing a visible grey edge around it.
+   */
+  --shadow-xs: 0 1px 2px rgba(120, 84, 60, 0.05), 0 2px 6px rgba(120, 84, 60, 0.04);
+  --shadow-sm: 0 2px 6px rgba(120, 84, 60, 0.05), 0 8px 22px rgba(120, 84, 60, 0.06);
+  --shadow-md: 0 4px 10px rgba(110, 76, 55, 0.06), 0 16px 40px rgba(110, 76, 55, 0.09);
+  --shadow-lg: 0 8px 18px rgba(96, 66, 48, 0.07), 0 28px 64px rgba(96, 66, 48, 0.12);
+  --shadow-xl: 0 14px 28px rgba(84, 57, 42, 0.09), 0 44px 100px rgba(84, 57, 42, 0.16);
+  --shadow-ring: 0 0 0 3px rgba(193, 154, 75, 0.3);
+  --shadow-ring-pink: 0 0 0 3px rgba(236, 63, 143, 0.22);
+  --shadow-luxe: 0 20px 50px rgba(110, 76, 55, 0.1), inset 0 0 0 1px rgba(193, 154, 75, 0.16);
+  /* Elevation *on* navy — cast is near-black, rim is gold. */
+  --shadow-dark: 0 20px 48px rgba(0, 0, 0, 0.42);
+  --shadow-dark-sm: 0 10px 26px rgba(0, 0, 0, 0.32);
 
-  /* Spacing scale */
+  /* -------------------------------------------------------------- 8. spacing */
   --s-1: 4px;
   --s-2: 8px;
   --s-3: 12px;
@@ -66,26 +210,32 @@
   --s-12: 48px;
   --s-16: 64px;
   --s-20: 80px;
+  --s-24: 96px;
 
-  /* Layout */
+  /* Vertical rhythm for full-width bands. */
+  --band-y: clamp(52px, 5.2vw, 96px);
+
+  /* --------------------------------------------------------------- 9. layout */
   --container: 1400px;
   --gutter: 32px;
-  --header-h: 76px;
+  --header-h: 84px;
 
-  /* Typography */
-  --font-display: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
-  --font-ui: 'Manrope', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-script: 'Caveat', 'Segoe Script', cursive;
-
-  /* Motion */
+  /* ---------------------------------------------------------- 10. motion */
   --t-fast: 150ms;
-  --t-base: 220ms;
+  --t-base: 240ms;
   --t-slow: 420ms;
+  --t-page: 380ms;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Layering — one place to reason about stacking (spec §35). */
+  /* 3D depth — one perspective value so every tilt matches. */
+  --perspective: 1200px;
+  --tilt-max: 3deg;
+
+  /* ------------------------------------------------------------ 11. layering */
   --z-decor: 0;
   --z-content: 1;
+  --z-raised: 2;
   --z-sticky-bar: 40;
   --z-header: 50;
   --z-drawer: 60;
@@ -103,5 +253,6 @@
   :root {
     --gutter: 16px;
     --header-h: 64px;
+    --tilt-max: 0deg; /* pointer tilt is desktop-only */
   }
 }

@@ -1,55 +1,94 @@
-/* Last band before the footer, so it carries the bottom padding .section drops. */
+/* Closing band before the footer. */
 .benefits {
-  padding-bottom: clamp(36px, 4.4vw, 64px);
+  position: relative;
+}
+
+.benefits-head {
+  margin-bottom: var(--s-6);
 }
 
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(10px, 1vw, 14px);
+  gap: clamp(14px, 1.5vw, 24px);
 }
 
+/*
+ * Stacked rather than side-by-side: at four across, an inline icon left only
+ * about 150px for the text and forced every subtitle to wrap awkwardly. The
+ * vertical card gives the copy the full column width.
+ */
 .benefit-card {
+  position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
   height: 100%;
   min-width: 0;
-  padding: 18px 20px;
-  border: 1px solid transparent;
+  padding: clamp(22px, 2.2vw, 30px) clamp(20px, 2vw, 26px);
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-xl);
+  background: var(--white);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease),
+    border-color 220ms var(--ease);
+}
+
+/* A wash of the card's own accent in the top corner, so the four cards stay a
+   family without four full pastel blocks competing with the gold headings. */
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
   background: var(--b-bg);
-  transition: transform 200ms var(--ease), box-shadow 200ms var(--ease), border-color 200ms var(--ease);
+  opacity: 0.85;
+  pointer-events: none;
 }
 
 .benefit-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--b-accent);
-  box-shadow: var(--shadow-md);
+  transform: perspective(900px) translateY(-6px) rotateX(2.5deg) scale(1.015);
+  border-color: var(--gold-line-strong);
+  box-shadow: var(--shadow-lg);
 }
 
 .benefit-icon {
+  position: relative;
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--gold-line);
   background: var(--white);
   color: var(--b-accent);
   box-shadow: var(--shadow-xs);
+  transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+}
+
+/* Icon lifts a touch further than the card, so it reads as the nearest layer. */
+.benefit-card:hover .benefit-icon {
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: var(--shadow-sm);
 }
 
 .benefit-text {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
   min-width: 0;
 }
 
 .benefit-title {
   font-family: var(--font-ui);
-  font-size: 1rem;
+  font-size: 1.02rem;
   font-weight: 800;
   line-height: 1.25;
   color: var(--ink);
@@ -57,10 +96,8 @@
 
 .benefit-sub {
   color: var(--text-muted);
-  /* Sized so the longest subtitle holds one line at the four-across desktop
-     width, as the reference shows. */
-  font-size: 0.75rem;
-  line-height: 1.4;
+  font-size: 0.86rem;
+  line-height: 1.45;
 }
 
 .benefit-pink     { --b-bg: var(--pink-bg);     --b-accent: #ef5da8; }
@@ -68,15 +105,38 @@
 .benefit-mint     { --b-bg: var(--mint-bg);     --b-accent: var(--teal); }
 .benefit-peach    { --b-bg: var(--peach-bg);    --b-accent: var(--coral); }
 
+/* ------------------------------------------------------------- on navy */
+
+.band-navy .benefit-card,
+.on-dark .benefit-card {
+  background: linear-gradient(168deg, rgba(20, 38, 66, 0.78), rgba(9, 20, 39, 0.9));
+  border-color: var(--gold-line-dark);
+}
+
+.band-navy .benefit-card::before,
+.on-dark .benefit-card::before { opacity: 0.14; }
+
+.band-navy .benefit-icon,
+.on-dark .benefit-icon {
+  background: var(--gold-soft-dark);
+  border-color: var(--gold-line-dark);
+}
+
+.band-navy .benefit-title,
+.on-dark .benefit-title { color: #fffaf0; }
+
+.band-navy .benefit-sub,
+.on-dark .benefit-sub { color: var(--on-navy-muted); }
+
+/* ---------------------------------------------------------- responsive */
+
 @media (max-width: 1099px) {
   .benefits-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 560px) {
   .benefits-grid { grid-template-columns: minmax(0, 1fr); }
-  .benefit-card { padding: 16px 18px; gap: 14px; }
+  .benefit-card { padding: 20px; }
   .benefit-icon { width: 48px; height: 48px; }
   .benefit-icon svg { width: 22px; height: 22px; }
-  .benefit-title { font-size: 0.98rem; }
-  .benefit-sub { font-size: 0.82rem; }
 }

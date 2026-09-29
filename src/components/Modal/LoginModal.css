@@ -1,7 +1,67 @@
+/*
+ * The sign-in dialog gets a blush crown with floral corners (spec §21): ivory
+ * surface, a white form card, a gold hairline between them.
+ *
+ * On the navy build this crown was dark, which framed the form by contrast.
+ * On the white build the frame comes from warmth and the gold seam instead —
+ * a navy block here would be the only dark surface a first-time visitor meets,
+ * and it would not belong to anything else on the page.
+ */
+.login-modal .modal-head {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--s-6) var(--s-5);
+  border-bottom-color: var(--gold-line-strong);
+  background:
+    radial-gradient(420px 200px at 10% -60%, rgba(193, 154, 75, 0.2), transparent 62%),
+    radial-gradient(360px 180px at 96% 150%, rgba(236, 63, 143, 0.12), transparent 60%),
+    linear-gradient(140deg, var(--blush-50), var(--champagne) 60%, var(--blush-100));
+}
+
+/* The head's own text sits above the botanical layer. */
+.login-modal .modal-head-text,
+.login-modal .modal-close {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.login-modal .modal-title {
+  font-family: var(--font-display);
+  color: var(--ink);
+}
+
+.login-modal .modal-subtitle { color: var(--text-muted); }
+
+.login-modal .modal-close {
+  border-color: var(--gold-line);
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--navy);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.login-modal .modal-close:hover {
+  border-color: var(--gold);
+  background: var(--white);
+  color: var(--gold-deep);
+}
+
+/* The form itself is a white card inside the ivory panel, so the fields read
+   as a distinct object rather than floating on the body background. */
+.login-modal .modal-body {
+  background: var(--ivory);
+}
+
 .login {
   display: flex;
   flex-direction: column;
   gap: var(--s-4);
+  padding: var(--s-5);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
 }
 
 .login-note {
@@ -10,9 +70,9 @@
   gap: 8px;
   margin: 0;
   padding: var(--s-3);
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-md);
-  background: var(--blue-bg);
+  background: var(--cream);
   font-size: 0.82rem;
   line-height: 1.55;
   color: var(--text-body);
@@ -21,7 +81,7 @@
 .login-note svg {
   flex: 0 0 auto;
   margin-top: 2px;
-  color: var(--sky);
+  color: var(--gold-deep);
 }
 
 .login-note strong { color: var(--ink); }

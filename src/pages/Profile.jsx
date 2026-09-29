@@ -28,7 +28,7 @@ export default function Profile() {
   return (
     <div className="page">
       <header className="page-hero">
-        <Decor scope="page" />
+        <Decor scope="page" on="light" />
         <div className="container page-hero-inner">
           <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: 'Profile' }]} />
           <h1 className="page-title">

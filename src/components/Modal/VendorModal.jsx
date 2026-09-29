@@ -186,7 +186,7 @@ export default function VendorModal({ vendorId, onClose }) {
           </button>
           <button
             type="button"
-            className="btn btn-teal"
+            className="btn btn-navy"
             onClick={() => openModal('chat', { vendorId: vendor.id })}
           >
             <Icon name="chat" size={16} /> Message

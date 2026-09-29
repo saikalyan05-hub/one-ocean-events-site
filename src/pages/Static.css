@@ -2,56 +2,104 @@
 
 /* --------------------------------------------------------------- steps */
 
+/*
+ * Five stages threaded on one gold rule.
+ *
+ * The rule is drawn per step — each one paints the segment to its right — so
+ * the same two declarations serve the horizontal row and the vertical timeline
+ * it becomes on narrow screens. A single line behind the row would need its own
+ * measurements at every breakpoint.
+ */
 .steps {
+  --mark: 68px;
+  --steps-gap: var(--s-6);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--s-5);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--steps-gap);
   margin: 0 0 var(--s-16);
   padding: 0;
   list-style: none;
-  counter-reset: step;
 }
 
-.step-card {
+.step {
   position: relative;
-  padding: var(--s-6);
-  border: 1px solid var(--line);
-  border-radius: var(--r-xl);
-  background: var(--white);
+  text-align: center;
 }
 
-.step-number {
+.step::after {
+  content: '';
   position: absolute;
-  top: var(--s-4);
-  right: var(--s-5);
-  font-family: var(--font-display);
-  font-size: 3rem;
-  line-height: 1;
-  color: var(--line);
+  top: calc(var(--mark) / 2);
+  left: calc(50% + var(--mark) / 2 + 10px);
+  right: calc(-50% - var(--steps-gap) + var(--mark) / 2 + 10px);
+  height: 1px;
+  background: var(--grad-gold-line);
+}
+
+.step:last-child::after { content: none; }
+
+.step-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--mark);
+  height: var(--mark);
+  margin: 0 auto var(--s-4);
+  border-radius: 50%;
+  border: 1px solid var(--gold-line);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
+}
+
+.step:hover .step-mark {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
 .step-icon {
   display: grid;
   place-items: center;
-  width: 58px;
-  height: 58px;
-  margin-bottom: var(--s-4);
-  border-radius: var(--r-md);
-  color: var(--navy);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--tone-bg, var(--gold-soft));
+  color: var(--tone-fg, var(--gold-deep));
+}
+
+/* Small gold seal on the shoulder of the medallion — the stage number. */
+.step-number {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--grad-gold);
+  color: #3a2a0c;
+  font-family: var(--font-ui);
+  font-size: 0.76rem;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(169, 126, 48, 0.34);
 }
 
 .step-title {
   margin: 0 0 6px;
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.22rem;
   color: var(--ink);
 }
 
 .step-text {
-  margin: 0;
+  max-width: 30ch;
+  margin: 0 auto;
   color: var(--text-muted);
+  font-size: 0.9rem;
   line-height: 1.6;
 }
+
 
 /* ----------------------------------------------------------------- faq */
 
@@ -67,10 +115,22 @@
 }
 
 .faq-item {
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-lg);
   background: var(--white);
   overflow: hidden;
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+}
+
+.faq-item:hover { border-color: var(--gold-line-strong); }
+
+/* An open question sits on champagne, so the answer being read is the one thing
+   on the page carrying colour. */
+.faq-item:has(details[open]) {
+  background: var(--cream);
+  border-color: var(--gold-line-strong);
+  box-shadow: var(--shadow-sm);
 }
 
 .faq-item summary {
@@ -87,16 +147,16 @@
 
 .faq-item summary::-webkit-details-marker { display: none; }
 
-.faq-item summary:hover { color: var(--coral); }
+.faq-item summary:hover { color: var(--gold-deep); }
 
 .faq-item summary:focus-visible {
-  outline: 3px solid var(--coral);
+  outline: 3px solid var(--gold);
   outline-offset: -3px;
 }
 
 .faq-chevron {
   flex: 0 0 auto;
-  color: var(--text-subtle);
+  color: var(--gold-deep);
   transition: transform var(--t-base) var(--ease);
 }
 
@@ -125,12 +185,15 @@
   line-height: 1.7;
 }
 
+/* A framed plate rather than the old organic blob: an irregular mask reads as a
+   rendering fault beside the straight-edged cards it sits next to, and the gold
+   rim is what ties the photograph to the rest of the system. */
 .about-media {
-  /* Soft organic corners echo the hero curve without repeating the clip path. */
   overflow: hidden;
-  border-radius: 46% 54% 42% 58% / 52% 44% 56% 48%;
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-2xl);
   aspect-ratio: 4 / 3;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
 }
 
 .about-media img {
@@ -151,10 +214,20 @@
 }
 
 .value-card {
+  height: 100%;
   padding: var(--s-5);
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-lg);
   background: var(--white);
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease),
+    border-color var(--t-base) var(--ease);
+}
+
+.value-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-line-strong);
+  box-shadow: var(--shadow-md);
 }
 
 .value-icon {
@@ -164,7 +237,8 @@
   height: 52px;
   margin-bottom: var(--s-3);
   border-radius: var(--r-md);
-  color: var(--navy);
+  background: var(--tone-bg, var(--gold-soft));
+  color: var(--tone-fg, var(--gold-deep));
 }
 
 .value-title {
@@ -180,13 +254,54 @@
   line-height: 1.6;
 }
 
-.about-panel {
-  max-width: 78ch;
+/* Reference sections as panels rather than loose prose. Left as running text
+   they stretched to the full container width, which puts ~110 characters on a
+   line and makes the bottom half of the page read as an unformatted document. */
+.about-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-5);
   margin-bottom: var(--s-12);
+}
+
+.about-panel {
+  padding: clamp(22px, 2.2vw, 32px);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-2xl);
+  background: var(--white);
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+}
+
+.about-panel:hover {
+  border-color: var(--gold-line-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+/* The legal notice is the longest and the least decorative, so it takes the
+   full row on champagne and closes the sequence. */
+.about-panel-wide {
+  grid-column: 1 / -1;
+  /* Its two paragraphs sit side by side: one 68ch column inside a full-width
+     panel leaves the right half of the card empty. */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-4) var(--s-8);
+  background: var(--cream);
+}
+
+.about-panel-wide .section-title { grid-column: 1 / -1; }
+
+.about-panel-wide p { margin-top: 0; }
+
+/* A panel heading is a step below a page section head. */
+.about-panel .section-title {
+  font-size: 1.3rem;
 }
 
 .about-panel p {
   margin: var(--s-3) 0 0;
+  max-width: 68ch;
   color: var(--text-body);
   line-height: 1.7;
 }
@@ -203,7 +318,7 @@
 .about-panel-note svg {
   flex: 0 0 auto;
   margin-top: 3px;
-  color: var(--sky);
+  color: var(--gold-deep);
 }
 
 .contact-list {
@@ -226,39 +341,62 @@
 
 /* ------------------------------------------------------------ cta band */
 
+/* The closing call to action returns to navy, so the page ends in the key the
+   hero opened in and the gold button has a dark surface to sit on. */
 .cta-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--s-5);
-  padding: var(--s-8);
+  padding: clamp(28px, 3vw, 44px);
+  border: 1px solid var(--gold-line-dark);
   border-radius: var(--r-2xl);
-  background: linear-gradient(120deg, var(--peach-bg), var(--lavender-bg));
+  background:
+    radial-gradient(700px 320px at 8% -40%, rgba(193, 154, 75, 0.2), transparent 62%),
+    radial-gradient(600px 300px at 96% 140%, rgba(224, 85, 159, 0.14), transparent 60%),
+    linear-gradient(120deg, var(--navy-700), var(--navy-900));
+  color: var(--on-navy);
+  box-shadow: var(--shadow-dark);
 }
 
 .cta-title {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
-  color: var(--ink);
+  color: var(--on-navy);
 }
 
 .cta-text {
   margin: 6px 0 0;
-  color: var(--text-muted);
+  color: var(--on-navy-muted);
 }
 
 /* ----------------------------------------------------------------- 404 */
 
-.notfound { text-align: center; margin-inline: auto; }
+/* The hero caps its children at 760px and left-aligns them; the 404 is the one
+   page where that block belongs in the middle of the stage.
+
+   The centring has to out-specify the rules below rather than simply precede
+   them: `.notfound-code` and `.page-title` both set the `margin` shorthand,
+   which resets the inline margins back to 0 whatever order they land in. */
+.notfound { text-align: center; }
+.page-hero .notfound > * { margin-inline: auto; }
+
+/* Nothing follows the hero on this route, so the empty ivory strip between it
+   and the footer comes off. */
+.notfound-page { padding-bottom: 0; }
+.notfound-page .page-hero { margin-bottom: 0; }
 
 .notfound-code {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(4.5rem, 3rem + 10vw, 9rem);
   line-height: 1;
-  background: linear-gradient(120deg, var(--coral), var(--lavender));
+  background: var(--grad-gold-soft);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -276,17 +414,58 @@
 
 /* ---------------------------------------------------------- breakpoints */
 
+@media (max-width: 1199px) {
+  /* Three across, then two: five columns of body copy stop being readable well
+     before the row itself runs out of room. */
+  .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* The rule only ever joins neighbours on the same row, so it comes off as
+     soon as the row can wrap. */
+  .step::after { content: none; }
+}
+
 @media (max-width: 991px) {
-  .steps { grid-template-columns: 1fr; }
   .values-grid { grid-template-columns: 1fr; }
+  .about-panels { grid-template-columns: 1fr; }
+  .about-panel-wide { grid-template-columns: 1fr; }
+
+  /* Vertical timeline: medallion in a rail on the left, copy beside it, and the
+     gold rule turns to run down between the medallions. */
+  .steps { grid-template-columns: minmax(0, 1fr); }
+
+  .step {
+    display: grid;
+    grid-template-columns: var(--mark) minmax(0, 1fr);
+    gap: 4px var(--s-5);
+    text-align: left;
+  }
+
+  .step-mark {
+    grid-row: span 2;
+    margin: 0;
+  }
+
+  .step-title { align-self: end; }
+
+  .step-text {
+    max-width: none;
+    margin: 0;
+  }
+
+  .step:not(:last-child)::after {
+    content: '';
+    top: calc(var(--mark) + 8px);
+    bottom: calc(var(--steps-gap) * -1 + 8px);
+    left: calc(var(--mark) / 2);
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(180deg, var(--gold-line-strong), rgba(169, 126, 48, 0.1));
+  }
 
   .about-split {
     grid-template-columns: 1fr;
     gap: var(--s-6);
   }
-
-  /* The blob shape reads as a mistake at small sizes; soften to a rounded card. */
-  .about-media { border-radius: var(--r-xl); }
 }
 
 @media (max-width: 560px) {

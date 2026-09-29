@@ -25,7 +25,7 @@
   align-items: center;
   gap: 8px;
   padding: 10px 6px;
-  color: var(--coral);
+  color: var(--gold-deep);
   font-weight: 800;
   white-space: nowrap;
   transition: gap var(--t-base) var(--ease), color var(--t-base) var(--ease);
@@ -33,7 +33,18 @@
 
 .featured-link:hover {
   gap: 12px;
-  color: var(--orange);
+  color: var(--gold);
+}
+
+/* On the navy band the "View All" link needs the bright end of the gold ramp. */
+.band-navy .featured-link,
+.on-dark .featured-link {
+  color: var(--gold-bright);
+}
+
+.band-navy .featured-link:hover,
+.on-dark .featured-link:hover {
+  color: var(--gold-pale);
 }
 
 @media (max-width: 767px) {

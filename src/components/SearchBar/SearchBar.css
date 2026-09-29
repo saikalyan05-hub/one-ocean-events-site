@@ -5,10 +5,25 @@
   width: 100%;
   max-width: 760px;
   padding: 8px 8px 8px 6px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-pill);
   background: var(--white);
-  box-shadow: 0 14px 34px rgba(7, 59, 76, 0.1);
+  /* Raised glass card with a hairline gold rim (reference §SEARCH). */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 16px 38px rgba(74, 55, 20, 0.12);
+  transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+}
+
+/* Lift on hover, and hold the lift while typing, so the pill feels raised off
+   the hero (spec §7). Scoped to the hero variant — the discovery page's in-place
+   filter bar should not bob on every focus. Movement is transform-only (GPU). */
+.search-hero:hover,
+.search-hero:focus-within {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 22px 46px rgba(74, 55, 20, 0.16);
 }
 
 .search-field {
@@ -24,7 +39,7 @@
   left: 14px;
   display: grid;
   place-items: center;
-  color: var(--coral);
+  color: var(--gold-deep);
   pointer-events: none;
 }
 
@@ -45,7 +60,7 @@
 
 .search-input:focus-visible {
   outline: none;
-  box-shadow: inset 0 0 0 2px var(--coral);
+  box-shadow: inset 0 0 0 2px var(--gold-deep);
 }
 
 /* Clears the native Safari/Chrome search clear affordance for a flat look. */
@@ -136,4 +151,23 @@
   }
 
   .search-submit-icon { display: block; }
+}
+
+/* ------------------------------------------------------------- on navy */
+
+/* Against the navy hero the bar is the brightest surface on the page — that is
+   deliberate: search is the primary action (spec §VISUAL PRIORITY). The cast
+   deepens so the ivory pill reads as genuinely lifted off the scene. */
+.on-dark .search-hero {
+  border-color: var(--gold-line-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 22px 52px rgba(2, 8, 20, 0.45);
+}
+
+.on-dark .search-hero:hover,
+.on-dark .search-hero:focus-within {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 28px 62px rgba(2, 8, 20, 0.55);
 }

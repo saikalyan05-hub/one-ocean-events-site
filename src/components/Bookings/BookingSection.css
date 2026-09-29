@@ -7,23 +7,33 @@
   list-style: none;
 }
 
+/* A booking is a record, not an advert, so the card stays plain white and earns
+   its place in the system through the gold hairline and the same lift every
+   other card on the site uses. */
 .booking-card {
   display: grid;
   grid-template-columns: 120px minmax(0, 1fr) auto;
   gap: var(--s-4);
   padding: var(--s-4);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-xl);
   background: var(--white);
-  transition: box-shadow var(--t-base) var(--ease);
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease),
+    border-color var(--t-base) var(--ease);
 }
 
-.booking-card:hover { box-shadow: var(--shadow-sm); }
+.booking-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold-line-strong);
+  box-shadow: var(--shadow-md);
+}
 
 .booking-img {
   width: 100%;
   height: 100%;
   min-height: 120px;
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-md);
   object-fit: cover;
 }
@@ -85,7 +95,7 @@
 .booking-notes {
   margin: var(--s-3) 0 0;
   padding-left: var(--s-3);
-  border-left: 3px solid var(--line);
+  border-left: 3px solid var(--gold-line-strong);
   color: var(--text-muted);
   font-size: 0.88rem;
   font-style: italic;

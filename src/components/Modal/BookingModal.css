@@ -4,6 +4,201 @@
   gap: var(--s-4);
 }
 
+/* ---------------------------------------------------- progress indicator */
+
+.bk-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.bk-progress-count {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.bk-progress-count strong { color: var(--gold-deep); }
+
+.bk-rail {
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: var(--line-soft);
+  overflow: hidden;
+}
+
+.bk-rail-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--grad-gold);
+  transition: width var(--t-base) var(--ease);
+}
+
+.bk-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bk-step { flex: 1 1 0; min-width: 0; }
+
+.bk-step-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  padding: 2px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* A step you have not reached yet is inert, so it should not offer a hand. */
+.bk-step-btn:disabled { cursor: default; }
+
+.bk-step-dot {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--gold-line);
+  border-radius: 50%;
+  background: var(--white);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-subtle);
+  transition:
+    background var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+/* The current step is the only filled dot — a gold ring around it separates it
+   from the completed ones without a second fill colour in the row. */
+.bk-step.is-on .bk-step-dot {
+  border-color: transparent;
+  background: var(--grad-gold);
+  color: #3a2a0c;
+  box-shadow: 0 0 0 3px var(--gold-soft);
+}
+
+.bk-step.is-done .bk-step-dot {
+  border-color: var(--gold-line-strong);
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+.bk-step-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-subtle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.bk-step.is-on .bk-step-label {
+  font-weight: 800;
+  color: var(--gold-deep);
+}
+
+.bk-step.is-done .bk-step-label { color: var(--text-muted); }
+
+.bk-step-btn:not(:disabled):hover .bk-step-dot {
+  border-color: var(--gold-deep);
+  background: var(--white);
+}
+
+/* ------------------------------------------------------------ step panel */
+
+.bk-step-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* Focus lands here on every step change so the panel is announced; the ring
+   would be noise on a heading nobody can tab to. */
+.bk-step-title:focus { outline: none; }
+
+/*
+ * A floor, not a fixed height. Six panels of very different length would
+ * otherwise make the dialog jump — and its buttons move under the pointer —
+ * on every Continue. The tallest panel (guests + notes) sets the real height.
+ */
+.bk-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-height: 178px;
+}
+
+.bk-lede {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------- review step */
+
+.bk-review {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+}
+
+.bk-review-row {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 10px var(--s-4);
+}
+
+.bk-review-row + .bk-review-row { border-top: 1px solid var(--line-soft); }
+
+.bk-review-row dt {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.bk-review-row dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* Quiet until you look for it — the row's content is the point, not the edit. */
+.bk-review-edit {
+  opacity: 0.75;
+  transition: opacity var(--t-fast) var(--ease);
+}
+
+.bk-review-row:hover .bk-review-edit,
+.bk-review-edit:focus-visible { opacity: 1; }
+
 /* ------------------------------------------------------ vendor summary */
 
 .bk-vendor {
@@ -11,15 +206,16 @@
   align-items: center;
   gap: var(--s-3);
   padding: var(--s-3);
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--page);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-lg);
+  background: var(--cream);
 }
 
 .bk-vendor-img {
   flex: 0 0 auto;
   width: 56px;
   height: 56px;
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-sm);
   object-fit: cover;
 }
@@ -63,21 +259,20 @@
   padding-left: 18px;
 }
 
-/* ----------------------------------------------------------------- grid */
-
-.bk-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--s-4);
-}
-
 /* ------------------------------------------------------------- estimate */
 
+/* The money line. A dashed mint box read as a system message; champagne inside
+   a gold hairline makes it the one figure the eye lands on before the CTA,
+   while the DEMO tag next to the label keeps it honest about where it comes
+   from. */
 .bk-estimate {
   padding: var(--s-4);
-  border: 1px dashed var(--teal);
-  border-radius: var(--r-md);
-  background: var(--mint-bg);
+  border: 1px solid var(--gold-line-strong);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(420px 160px at 100% 0%, rgba(193, 154, 75, 0.16), transparent 70%),
+    linear-gradient(170deg, var(--white), var(--cream));
+  box-shadow: var(--shadow-xs);
 }
 
 .bk-estimate-row {
@@ -94,7 +289,9 @@
   gap: 6px;
   font-size: 0.85rem;
   font-weight: 700;
-  color: #0E7C6B;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
 }
 
 .bk-estimate-value {
@@ -169,9 +366,9 @@
 .bk-reference {
   margin: 0;
   padding: 8px 16px;
-  border: 1px dashed var(--line);
+  border: 1px dashed var(--gold-line-strong);
   border-radius: var(--r-pill);
-  background: var(--page);
+  background: var(--cream);
   font-size: 0.9rem;
   color: var(--text-muted);
   letter-spacing: 0.02em;
@@ -192,7 +389,23 @@
 /* ---------------------------------------------------------- breakpoints */
 
 @media (max-width: 599px) {
-  .bk-grid { grid-template-columns: 1fr; }
   .bk-actions { flex-direction: column-reverse; }
   .bk-done-actions .btn { flex: 1 1 100%; }
+
+  /* Six labels will not fit across a phone, and truncating them to three
+     characters each says less than nothing. The dots keep the shape of the
+     flow and the "Step 3 of 6" line above carries the rest. */
+  .bk-step-label { display: none; }
+  .bk-step-dot { width: 24px; height: 24px; font-size: 0.72rem; }
+
+  /* The label column would leave the value about eight characters wide. */
+  .bk-review-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px var(--s-3);
+    padding: var(--s-3) var(--s-4);
+  }
+
+  .bk-review-row dt { grid-column: 1; }
+  .bk-review-row dd { grid-column: 1; }
+  .bk-review-edit { grid-column: 2; grid-row: 1 / span 2; }
 }

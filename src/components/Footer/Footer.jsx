@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import Icon from '../common/Icon';
+import Logo from '../Header/Logo';
+import Decor from '../Hero/Decor';
 import './Footer.css';
 
 /** Footer link groups (spec §22). Kept to five short columns to avoid crowding. */
@@ -54,13 +56,12 @@ const YEAR = new Date().getFullYear();
 
 export default function Footer() {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer on-dark">
+      <Decor scope="page" on="dark" />
       <div className="container footer-inner">
         <div className="footer-brand">
-          <span className="footer-logo">
-            <span className="footer-logo-top">ONE OCEAN</span>
-            <span className="footer-logo-bottom">EVENTS</span>
-          </span>
+          {/* The real brand lockup, not a text stand-in — one mark across the site. */}
+          <Logo />
           <p className="footer-tagline">
             Discover, compare and book trusted event vendors for weddings, parties and every
             celebration in between.

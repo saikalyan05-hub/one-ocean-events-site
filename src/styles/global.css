@@ -1,6 +1,6 @@
 @import './variables.css';
 
-/* --------------------------------------------------------------- reset */
+/* =================================================================== reset */
 
 *,
 *::before,
@@ -27,14 +27,14 @@ p, figure, blockquote, dl, dd {
 
 body {
   /* `overflow-x: clip` contains decorative overflow without creating a scroll
-     container, so `position: sticky` on the header keeps working (spec §35). */
+     container, so `position: sticky` on the header keeps working. */
   overflow-x: clip;
   min-height: 100vh;
   background: var(--page);
   color: var(--text);
   font-family: var(--font-ui);
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -74,32 +74,98 @@ a {
   text-decoration: none;
 }
 
-/* --------------------------------------------------------- typography */
+/* ============================================================== typography */
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.015em;
   color: var(--ink);
 }
 
 h4, h5, h6 {
   font-family: var(--font-ui);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: var(--lh-snug);
   color: var(--ink);
 }
 
-/* ----------------------------------------------------------- a11y base */
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+
+/* Small caps label above a heading — "PLAN • BOOK • CELEBRATE". */
+.eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-ui);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.eyebrow .dot { color: var(--gold); }
+
+/* Gold-filled word inside a display heading. */
+.accent {
+  background: var(--grad-gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* On navy the type ramp goes muddy; the soft ramp is the one that glows. */
+.on-dark .accent,
+.band-navy .accent {
+  background: var(--grad-gold-soft);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* The reference's second accent: the highlighted word in section headings is
+   pink, not gold, which is what stops nine gold headings in a row. */
+.accent-pink {
+  background: var(--grad-pink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.on-dark .accent-pink,
+.band-navy .accent-pink {
+  background: linear-gradient(103deg, #ffa3cc 0%, #ff6aae 50%, #ef4b95 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.accent-rose { color: var(--rose); }
+
+.lede {
+  font-size: var(--fs-lede);
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+/* ============================================================ a11y base */
 
 :focus-visible {
-  outline: 3px solid var(--coral);
+  outline: 3px solid var(--gold-deep);
   outline-offset: 2px;
   border-radius: 6px;
 }
 
-/* Remove the ring for pointer users without removing it for keyboard users. */
+/* On navy the gold ring loses contrast — brighten it. */
+.on-dark :focus-visible,
+.band-navy :focus-visible {
+  outline-color: var(--gold-bright);
+}
+
 :focus:not(:focus-visible) {
   outline: none;
 }
@@ -124,7 +190,7 @@ h4, h5, h6 {
   z-index: var(--z-toast);
   padding: 12px 20px;
   border-radius: var(--r-pill);
-  background: var(--coral);
+  background: var(--grad-gold);
   color: var(--white);
   font-weight: 700;
   transition: top var(--t-base) var(--ease);
@@ -134,7 +200,7 @@ h4, h5, h6 {
   top: 12px;
 }
 
-/* -------------------------------------------------------------- layout */
+/* ================================================================= layout */
 
 .container {
   width: 100%;
@@ -153,7 +219,7 @@ h4, h5, h6 {
 }
 
 .page-title {
-  font-size: clamp(1.9rem, 1.3rem + 2vw, 2.9rem);
+  font-size: var(--fs-h1);
 }
 
 .page-sub {
@@ -162,10 +228,6 @@ h4, h5, h6 {
   color: var(--text-muted);
 }
 
-/* Top-only, so two stacked sections do not add their paddings together —
-   the reference keeps a single tight band between the category row, the
-   vendor carousel and the benefit strip. The last section on a page adds its
-   own bottom padding. */
 .section {
   padding-block: clamp(26px, 2.8vw, 40px) 0;
 }
@@ -176,15 +238,11 @@ h4, h5, h6 {
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--s-4);
-  margin-bottom: var(--s-5);
+  margin-bottom: var(--s-6);
 }
 
 .section-title {
-  font-size: clamp(1.7rem, 1.1rem + 2.2vw, 2.6rem);
-}
-
-.section-title .accent {
-  color: var(--coral);
+  font-size: var(--fs-h2);
 }
 
 .section-sub {
@@ -193,7 +251,204 @@ h4, h5, h6 {
   font-size: 0.98rem;
 }
 
-/* ------------------------------------------------------------- buttons */
+/* ------------------------------------------------------------ full bands */
+
+/*
+ * The site is white. Bands differentiate by *temperature*, not by lightness:
+ * pearl → ivory → cream → blush are all within a few percent of each other, so
+ * the page reads as one continuous bright surface with sections that warm and
+ * cool, rather than as alternating stripes. Deep navy survives in exactly two
+ * places — the footer and an opt-in `.band-navy` contrast block.
+ *
+ * A band is full-bleed; its contents still sit in a `.container`. Every band is
+ * a stacking context so decorative layers inside it can never escape upward.
+ */
+.band {
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--band-y);
+}
+
+/* A band already supplies the vertical rhythm; a .section inside one must not
+   add a second helping. */
+.band .section {
+  padding-block: 0;
+}
+
+.band > .container {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.band-cream {
+  background: linear-gradient(180deg, var(--pearl), var(--cream) 46%, var(--ivory));
+}
+
+.band-ivory {
+  background: linear-gradient(180deg, var(--ivory), var(--pearl));
+}
+
+/* Blush — the warmest light band. Used where the page wants to feel floral:
+   the hero's footing, social proof, the closing rows. */
+.band-blush {
+  background:
+    var(--wash-rose),
+    linear-gradient(180deg, var(--blush-50), var(--blush-100) 52%, var(--blush-50));
+}
+
+/* Pearl — the quietest. For dense, working content (grids, tables, dashboards)
+   where any warmth at all would fight the data. */
+.band-pearl {
+  background: var(--pearl);
+}
+
+/*
+ * A hairline of gold between consecutive light bands. Without it, two bands a
+ * few percent apart in warmth meet in a seam you can't quite see but can
+ * definitely feel. The rule is what makes the transition deliberate.
+ */
+.band-cream + .band-ivory,
+.band-ivory + .band-cream,
+.band-blush + .band-ivory,
+.band-ivory + .band-blush,
+.band-cream + .band-blush,
+.band-blush + .band-cream,
+.band-pearl + .band-blush,
+.band-blush + .band-pearl {
+  border-top: 1px solid var(--gold-line-faint);
+}
+
+/* Deep navy, opt-in. A contrast block, not a default surface — a page should
+   carry at most one, plus the footer. */
+.band-navy {
+  background:
+    radial-gradient(1100px 520px at 15% -10%, rgba(193, 154, 75, 0.16), transparent 62%),
+    radial-gradient(900px 480px at 88% 110%, rgba(224, 85, 159, 0.12), transparent 60%),
+    linear-gradient(180deg, var(--navy-800), var(--navy-700) 48%, var(--navy-900));
+  color: var(--on-navy);
+}
+
+/* Inside a navy band, headings and body text flip to the light ramp. */
+.band-navy h1,
+.band-navy h2,
+.band-navy h3,
+.band-navy h4,
+.on-dark h1,
+.on-dark h2,
+.on-dark h3,
+.on-dark h4 {
+  color: var(--on-navy);
+}
+
+.band-navy .section-sub,
+.band-navy .lede,
+.on-dark .section-sub,
+.on-dark .lede {
+  color: var(--on-navy-muted);
+}
+
+.band-navy .eyebrow,
+.on-dark .eyebrow {
+  color: var(--gold-bright);
+}
+
+/*
+ * Controls on a dark surface.
+ *
+ * The button variants above assume an ivory backdrop: a white `.btn-secondary`
+ * on navy reads as a paste-up, and a navy `.btn-ghost` disappears entirely.
+ * These flip the same three variants onto the navy ramp without touching their
+ * geometry, so a button keeps its size, radius, hover lift and press behaviour
+ * whichever surface it lands on.
+ */
+.band-navy .btn-secondary,
+.on-dark .btn-secondary {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--gold-line-dark);
+  color: var(--on-navy);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-dark-sm);
+}
+
+.band-navy .btn-secondary:not(:disabled):hover,
+.on-dark .btn-secondary:not(:disabled):hover {
+  background: var(--gold-soft-dark);
+  border-color: var(--gold-line);
+  color: var(--gold-bright);
+}
+
+.band-navy .btn-outline,
+.on-dark .btn-outline {
+  border-color: var(--gold-line-dark);
+  color: var(--gold-bright);
+}
+
+.band-navy .btn-outline:not(:disabled):hover,
+.on-dark .btn-outline:not(:disabled):hover {
+  background: var(--gold-soft-dark);
+  border-color: var(--gold-line);
+}
+
+.band-navy .btn-ghost,
+.on-dark .btn-ghost {
+  color: var(--on-navy);
+}
+
+.band-navy .btn-ghost:not(:disabled):hover,
+.on-dark .btn-ghost:not(:disabled):hover {
+  background: var(--gold-soft-dark);
+  color: var(--gold-bright);
+}
+
+/* The breadcrumb sits directly above the page title, so it rides the same ramp.
+   Scoped with the surface class so it outranks the defaults in common.css. */
+.band-navy .breadcrumb,
+.on-dark .breadcrumb {
+  color: var(--on-navy-subtle);
+}
+
+.band-navy .breadcrumb a,
+.on-dark .breadcrumb a {
+  color: var(--on-navy-muted);
+}
+
+.band-navy .breadcrumb a:hover,
+.on-dark .breadcrumb a:hover {
+  color: var(--gold-bright);
+}
+
+.band-navy .breadcrumb [aria-current='page'],
+.on-dark .breadcrumb [aria-current='page'] {
+  color: var(--on-navy);
+}
+
+/* ----------------------------------------------------------- tone tokens */
+
+/*
+ * Nine services, nine pastels. Any component that tints by category reads
+ * --tone-bg / --tone-fg rather than naming a pastel itself, so a homepage tile,
+ * a category card, a How-It-Works medallion and an About value card all draw
+ * from one table and cannot drift apart.
+ */
+.tone-pink     { --tone-bg: var(--pink-bg);     --tone-fg: #ef5da8; }
+.tone-lavender { --tone-bg: var(--lavender-bg); --tone-fg: var(--lavender); }
+.tone-peach    { --tone-bg: var(--peach-bg);    --tone-fg: var(--coral); }
+.tone-yellow   { --tone-bg: var(--yellow-bg);   --tone-fg: var(--orange); }
+.tone-sky      { --tone-bg: var(--blue-bg);     --tone-fg: var(--sky); }
+.tone-rose     { --tone-bg: var(--rose-bg);     --tone-fg: #ec4899; }
+.tone-mint     { --tone-bg: var(--mint-bg);     --tone-fg: var(--teal); }
+.tone-blue     { --tone-bg: var(--blue-bg);     --tone-fg: #2f9fe0; }
+
+/* Hairline gold rule used to separate bands and underline section heads. */
+.rule-gold {
+  height: 1px;
+  border: 0;
+  background: var(--grad-gold-line);
+  opacity: 0.55;
+}
+
+/* ================================================================ buttons */
 
 .btn {
   display: inline-flex;
@@ -210,6 +465,7 @@ h4, h5, h6 {
   font-weight: 700;
   line-height: 1.2;
   text-align: center;
+  white-space: nowrap;
   cursor: pointer;
   transition: transform var(--t-fast) var(--ease), box-shadow var(--t-base) var(--ease),
     background-color var(--t-base) var(--ease), border-color var(--t-base) var(--ease),
@@ -222,9 +478,8 @@ h4, h5, h6 {
   cursor: not-allowed;
 }
 
-/* Lift and a small scale on hover, a slight press on click (update spec §21).
-   Full-width buttons are exempt from the scale: at 100% width, growing by 3%
-   pushes them past their container and can introduce horizontal overflow. */
+/* Lift on hover, press on click. Full-width buttons skip the scale: at 100%
+   width, growing by 3% pushes them past their container. */
 .btn:not(:disabled):hover {
   transform: translateY(-1px) scale(1.03);
   box-shadow: var(--shadow-sm);
@@ -238,27 +493,46 @@ h4, h5, h6 {
   transform: scale(0.97);
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--coral), var(--orange));
-  color: var(--white);
-  box-shadow: 0 8px 20px rgba(255, 107, 94, 0.28);
+/* Primary CTA — antique gold with a metallic sheen. The inset top highlight is
+   the light catch on the metal; the tinted cast sits below. */
+.btn-primary,
+.btn-gold {
+  background: var(--grad-gold);
+  color: #3a2a0c;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 10px 22px rgba(169, 126, 48, 0.32);
 }
 
-.btn-primary:not(:disabled):hover {
-  filter: brightness(1.05);
-  box-shadow: 0 12px 26px rgba(255, 107, 94, 0.34);
+.btn-primary:not(:disabled):hover,
+.btn-gold:not(:disabled):hover {
+  filter: brightness(1.06) saturate(1.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 14px 28px rgba(169, 126, 48, 0.4);
 }
 
 .btn-secondary {
   background: var(--white);
-  border-color: var(--line);
+  border-color: var(--gold-line);
   color: var(--navy);
   box-shadow: var(--shadow-xs);
 }
 
 .btn-secondary:not(:disabled):hover {
-  border-color: var(--coral);
-  color: var(--coral);
+  border-color: var(--gold-deep);
+  color: var(--gold-deep);
+  background: var(--gold-soft);
+}
+
+.btn-outline {
+  border-color: var(--gold-line-strong);
+  color: var(--gold-deep);
+}
+
+.btn-outline:not(:disabled):hover {
+  background: var(--gold-soft);
+  border-color: var(--gold-deep);
 }
 
 .btn-ghost {
@@ -266,19 +540,83 @@ h4, h5, h6 {
 }
 
 .btn-ghost:not(:disabled):hover {
-  background: var(--coral-soft);
-  color: var(--coral);
+  background: var(--gold-soft);
+  color: var(--gold-deep);
 }
 
-.btn-teal {
-  background: var(--teal);
+/* The palette's warm accent, for an action that should read as inviting rather
+   than transactional — "Watch our story", "Start planning". Coral is close
+   enough to --danger in hue that the two never appear in the same row. */
+.btn-coral {
+  background: linear-gradient(140deg, #ff8a72, var(--coral) 60%, #ef5245);
+  border-color: transparent;
   color: var(--white);
-  box-shadow: 0 8px 20px rgba(24, 183, 160, 0.26);
+  box-shadow: 0 8px 20px rgba(255, 107, 94, 0.28);
 }
 
-.btn-block {
-  width: 100%;
+.btn-coral:not(:disabled):hover {
+  box-shadow: 0 12px 26px rgba(255, 107, 94, 0.36);
 }
+
+/*
+ * Icon-only button. `aspect-ratio` rather than a fixed width so it tracks
+ * --btn-h through the size modifiers, and 40px floor keeps it above the 24px
+ * pointer-target minimum even at .btn-sm.
+ */
+.btn-icon {
+  aspect-ratio: 1;
+  min-width: 40px;
+  padding: 0;
+  border-color: var(--gold-line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--navy);
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-icon:not(:disabled):hover {
+  border-color: var(--gold-deep);
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: var(--white);
+  box-shadow: 0 8px 20px rgba(207, 59, 47, 0.26);
+}
+
+/* The second action on a card or dialog, where gold is already spent on the
+   first. Solid navy with a gold rim reads as the same family; the bright teal
+   this replaced belonged to no part of the palette. */
+.btn-navy {
+  background: linear-gradient(140deg, var(--navy-700), var(--navy-900));
+  border-color: var(--gold-line-dark);
+  color: var(--on-navy);
+  box-shadow: 0 10px 22px rgba(8, 19, 39, 0.28);
+}
+
+.btn-navy:not(:disabled):hover {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+  box-shadow: 0 14px 28px rgba(8, 19, 39, 0.34);
+}
+
+/* On navy: a glass button with a gold rim. */
+.btn-onnavy {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--gold-line-dark);
+  color: var(--on-navy);
+  backdrop-filter: blur(8px);
+}
+
+.btn-onnavy:not(:disabled):hover {
+  background: var(--gold-soft-dark);
+  border-color: var(--gold);
+  color: var(--gold-bright);
+}
+
+.btn-block { width: 100%; }
 
 .btn-sm {
   min-height: 38px;
@@ -286,7 +624,33 @@ h4, h5, h6 {
   font-size: 0.85rem;
 }
 
-/* --------------------------------------------------------------- forms */
+.btn-lg {
+  min-height: 54px;
+  padding: 14px 32px;
+  font-size: 1.02rem;
+}
+
+/* Loading state: the label dims and a gold spinner takes the leading slot. */
+.btn-loading {
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.btn-loading::before {
+  content: '';
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: ooe-spin 620ms linear infinite;
+}
+
+@keyframes ooe-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* =================================================================== forms */
 
 .field {
   display: flex;
@@ -294,21 +658,38 @@ h4, h5, h6 {
   gap: 6px;
 }
 
-.field-label {
-  font-size: 0.85rem;
+.field-label,
+.field > label {
+  font-size: var(--fs-small);
   font-weight: 700;
   color: var(--navy);
 }
 
+.field-optional {
+  margin-left: 4px;
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+}
+
 .field-hint {
-  font-size: 0.78rem;
+  margin: 0;
+  font-size: var(--fs-caption);
   color: var(--text-subtle);
 }
 
 .field-error {
-  font-size: 0.78rem;
+  margin: 0;
+  font-size: var(--fs-caption);
   font-weight: 600;
-  color: #d7443a;
+  color: var(--danger);
+}
+
+.field-success {
+  margin: 0;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--success);
 }
 
 .input,
@@ -337,33 +718,41 @@ h4, h5, h6 {
 .input:hover,
 .select:hover,
 .textarea:hover {
-  border-color: #cfdae0;
+  border-color: var(--gold-line);
 }
 
 .input:focus-visible,
 .select:focus-visible,
 .textarea:focus-visible {
   outline: none;
-  border-color: var(--coral);
+  border-color: var(--gold-deep);
   box-shadow: var(--shadow-ring);
 }
 
 .input[aria-invalid='true'],
 .select[aria-invalid='true'],
 .textarea[aria-invalid='true'] {
-  border-color: #d7443a;
+  border-color: var(--danger);
+}
+
+.input:disabled,
+.select:disabled,
+.textarea:disabled {
+  background: #f7f4ee;
+  color: var(--text-subtle);
+  cursor: not-allowed;
 }
 
 .select {
   appearance: none;
   padding-right: 38px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%230B5263' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%238F6725' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   cursor: pointer;
 }
 
-/* --------------------------------------------------------------- utils */
+/* =================================================================== cards */
 
 .card {
   background: var(--white);
@@ -372,48 +761,200 @@ h4, h5, h6 {
   box-shadow: var(--shadow-sm);
 }
 
+/*
+ * The shared luxury card. Every card in the product (vendor, category, stat,
+ * booking, info, testimonial) is built on this: same radius, same warm cast,
+ * same hairline gold rim, same lift on hover.
+ */
+.luxe-card {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease),
+    border-color var(--t-base) var(--ease);
+}
+
+.luxe-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-line);
+  box-shadow: var(--shadow-md);
+}
+
+/* Dark counterpart, for cards sitting on a navy band. */
+.luxe-card-dark {
+  background: linear-gradient(165deg, var(--navy-600), var(--navy-700));
+  border-color: var(--gold-line-dark);
+  box-shadow: var(--shadow-dark-sm);
+  color: var(--on-navy);
+}
+
+.luxe-card-dark:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-dark);
+}
+
+/* Frosted panel over photography or navy. */
+.glass {
+  background: rgba(12, 26, 48, 0.55);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid var(--gold-line-dark);
+}
+
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 5px 12px;
   border-radius: var(--r-pill);
-  font-size: 0.78rem;
+  font-size: var(--fs-caption);
   font-weight: 700;
   line-height: 1.3;
 }
 
-.clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+/* =================================================================== utils */
 
-.clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
+.clamp-1,
+.clamp-2,
 .clamp-3 {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.clamp-1 { -webkit-line-clamp: 1; line-clamp: 1; }
+.clamp-2 { -webkit-line-clamp: 2; line-clamp: 2; }
+.clamp-3 { -webkit-line-clamp: 3; line-clamp: 3; }
 
 /* Prevents long unbroken vendor names from pushing a card wider. */
 .wrap-anywhere {
   overflow-wrap: anywhere;
 }
 
-/* ------------------------------------------------------- reduced motion */
+/* Reserves room for the floating compare tray so it never covers the footer. */
+body.has-compare-bar {
+  padding-bottom: 104px;
+}
 
+@media (max-width: 767px) {
+  body.has-compare-bar { padding-bottom: 136px; }
+}
+
+/* ===================================================== entrance animations */
+
+@keyframes ooe-fade {
+  from { opacity: 0; }
+}
+
+@keyframes ooe-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* Page transition: a brief fade with a small rise as a new top-level route
+   mounts. Kept under 400ms so navigation never feels slow. */
+@keyframes route-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+  }
+}
+
+/*
+ * `backwards`, never `both`.
+ *
+ * `both` includes `forwards`, which pins the final keyframe after the animation
+ * ends. Since `to` is implicit here, that final value is an *identity*
+ * transform — visually nothing, but a computed transform other than `none`
+ * makes the element a stacking context AND the containing block for every
+ * `position: fixed` descendant. The route wrapper holds whole pages, so that
+ * cost two real bugs at once: the mobile filter drawer's z-index of 61 was
+ * scoped inside this wrapper (which is itself `z-index: auto`) and so painted
+ * under the compare tray, and its `top: 0` resolved to the wrapper's top rather
+ * than the viewport's, dropping it 72px down and 72px past the bottom edge.
+ *
+ * `backwards` fills only before the animation starts, so the entrance plays
+ * identically and the transform computes back to `none` the moment it ends.
+ */
+.route-fade {
+  animation: route-in var(--t-page) var(--ease-out) backwards;
+}
+
+.fade-in {
+  animation: ooe-fade var(--t-slow) var(--ease) both;
+}
+
+/* Same reasoning as .route-fade — a card that has finished rising should not
+   keep a leftover transform that traps anything fixed inside it. */
+.rise {
+  animation: ooe-rise var(--t-slow) var(--ease) backwards;
+  /* Capped so a long list never leaves the last card waiting seconds. */
+  animation-delay: calc(min(var(--i, 0), 11) * 45ms);
+}
+
+/* Gentle float for decorative layers only. */
+@keyframes ooe-float {
+  50% { transform: translateY(-9px) rotate(var(--float-rot, 2deg)); }
+}
+
+/*
+ * Scroll reveal: blocks fade and rise the first time they enter the viewport.
+ * State-driven rather than keyframed so it can never get stuck hidden — the
+ * observer marks it shown at once under reduced motion.
+ */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--t-slow) var(--ease),
+    transform var(--t-slow) var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/*
+ * The compositor hint is scoped to the state that still has to move. Left on
+ * permanently it does the same damage as a leftover transform — every revealed
+ * block becomes a stacking context and a containing block for fixed children —
+ * and it keeps a layer alive for a section that will never animate again.
+ */
+.reveal:not(.is-inview) {
+  will-change: opacity, transform;
+}
+
+.reveal.is-inview {
+  opacity: 1;
+  transform: none;
+}
+
+/* ========================================================== status pills */
+
+/*
+ * One vocabulary for every status the demo shows — booking states on /bookings
+ * and in the dashboards, plus vendor, review and announcement states in admin.
+ * Defined here rather than per-component so the same word never renders in two
+ * different colours on two different screens.
+ */
+.status-requested   { background: var(--peach-bg); color: #a15a15; }
+.status-pending     { background: var(--yellow-bg); color: #8a6410; }
+.status-confirmed   { background: var(--mint-bg); color: var(--success); }
+.status-completed   { background: var(--blue-bg); color: #1d6c93; }
+.status-cancelled   { background: #f4f2ee; color: var(--text-subtle); }
+.status-active      { background: var(--mint-bg); color: var(--success); }
+.status-disabled    { background: #f4f2ee; color: var(--text-subtle); }
+.status-approved    { background: var(--mint-bg); color: var(--success); }
+.status-hidden      { background: #f4f2ee; color: var(--text-subtle); }
+.status-published   { background: var(--mint-bg); color: var(--success); }
+.status-draft       { background: var(--yellow-bg); color: #8a6410; }
+
+/* ======================================================== reduced motion */
+
+/*
+ * Honours the OS setting: no parallax, no pointer tilt, no float, no reveal
+ * movement. Kept last so it wins every earlier declaration.
+ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -427,83 +968,15 @@ h4, h5, h6 {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-}
 
-/* Bare <label> inside a .field gets the same treatment as .field-label. */
-.field > label {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--navy);
-}
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 
-.field-optional {
-  margin-left: 4px;
-  font-weight: 500;
-  font-size: 0.75rem;
-  color: var(--text-subtle);
-}
-
-.field-hint,
-.field-error {
-  margin: 0;
-}
-
-/* Reserves room for the floating compare tray so it never covers the footer. */
-body.has-compare-bar {
-  padding-bottom: 104px;
-}
-
-@media (max-width: 767px) {
-  body.has-compare-bar { padding-bottom: 136px; }
-}
-
-/* ------------------------------------------------------ entrance animations */
-
-/*
- * Subtle, once-only entrances (update spec §22). Sections fade, cards lift a
- * few pixels, and lists stagger via an `--i` index set inline by the renderer.
- * Every one of these is neutralised by the prefers-reduced-motion block above,
- * which zeroes animation duration globally with !important.
- */
-
-@keyframes ooe-fade {
-  from { opacity: 0; }
-}
-
-@keyframes ooe-rise {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  /* Neutralises the hero tilt and every decorative drift at the source. */
+  :root {
+    --tilt-max: 0deg;
   }
 }
-
-.fade-in {
-  animation: ooe-fade var(--t-slow) var(--ease) both;
-}
-
-.rise {
-  animation: ooe-rise var(--t-slow) var(--ease) both;
-  /* Capped so a long list never leaves the last card waiting seconds to appear. */
-  animation-delay: calc(min(var(--i, 0), 11) * 45ms);
-}
-
-/* ------------------------------------------------------------ status pills */
-
-/*
- * One vocabulary for every status the demo shows — booking states on /bookings
- * and in the dashboards, plus the vendor, review and announcement states in
- * admin. Class names come from categorySlug(), so "Few dates left" would be
- * .status-few-dates-left. Defined here rather than per-component so the same
- * word never renders in two different colours on two different screens.
- */
-.status-requested   { background: var(--peach-bg); color: #a15a15; }
-.status-pending     { background: var(--yellow-bg); color: #8a6410; }
-.status-confirmed   { background: var(--mint-bg); color: #0e7c6b; }
-.status-completed   { background: var(--blue-bg); color: #1d6c93; }
-.status-cancelled   { background: #f4f6f8; color: var(--text-subtle); }
-.status-active      { background: var(--mint-bg); color: #0e7c6b; }
-.status-disabled    { background: #f4f6f8; color: var(--text-subtle); }
-.status-approved    { background: var(--mint-bg); color: #0e7c6b; }
-.status-hidden      { background: #f4f6f8; color: var(--text-subtle); }
-.status-published   { background: var(--mint-bg); color: #0e7c6b; }
-.status-draft       { background: var(--yellow-bg); color: #8a6410; }

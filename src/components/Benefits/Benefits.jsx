@@ -36,7 +36,17 @@ const BENEFITS = [
 
 export default function Benefits() {
   return (
-    <section className="benefits section" aria-label="Why book with One Ocean Events">
+    <section className="benefits section" aria-labelledby="benefits-heading">
+      <div className="section-head benefits-head">
+        <div>
+          <p className="eyebrow">Why One Ocean</p>
+          <h2 id="benefits-heading" className="section-title">
+            Everything You Need to <span className="accent">Celebrate</span>
+          </h2>
+          <p className="section-sub">From the first shortlist to the day itself, in one place</p>
+        </div>
+      </div>
+
       <ul className="benefits-grid">
         {BENEFITS.map((benefit) => (
           <li key={benefit.title}>

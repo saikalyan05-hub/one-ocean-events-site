@@ -1,15 +1,33 @@
+/**
+ * Deep navy footer — the page closes in the same key the hero opened in.
+ *
+ * It is a stacking context of its own so the botanical corner layer inside it
+ * can never paint over the columns above.
+ */
+
 .site-footer {
+  position: relative;
+  isolation: isolate;
   flex: 0 0 auto;
-  margin-top: var(--s-12);
-  border-top: 1px solid var(--line);
-  background: linear-gradient(180deg, #fdfbf8 0%, #f6fbfd 100%);
+  overflow: hidden;
+  border-top: 1px solid var(--gold-line-dark);
+  background:
+    radial-gradient(900px 420px at 12% -20%, rgba(193, 154, 75, 0.14), transparent 62%),
+    radial-gradient(760px 400px at 92% 120%, rgba(224, 85, 159, 0.1), transparent 60%),
+    linear-gradient(180deg, var(--navy-800), var(--navy-900));
+  color: var(--on-navy-muted);
+}
+
+.site-footer > .container {
+  position: relative;
+  z-index: var(--z-content);
 }
 
 .footer-inner {
   display: grid;
   grid-template-columns: minmax(260px, 1.1fr) minmax(0, 2.6fr);
   gap: clamp(28px, 4vw, 64px);
-  padding-block: clamp(36px, 4vw, 56px) var(--s-8);
+  padding-block: clamp(40px, 4.4vw, 64px) var(--s-8);
 }
 
 /* ---------------------------------------------------------------- brand */
@@ -17,46 +35,38 @@
 .footer-brand {
   display: flex;
   flex-direction: column;
-  gap: var(--s-3);
+  align-items: flex-start;
+  gap: var(--s-4);
   min-width: 0;
 }
 
-.footer-logo {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
+/* The shared Logo component sits on navy here exactly as it does in the header;
+   its wordmark inherits currentColor, so only the colour below is needed. */
+.site-footer .logo {
+  margin-left: -6px;
+  color: var(--on-navy);
 }
 
-.footer-logo-top {
-  font-size: 1.22rem;
-  font-weight: 800;
-  color: var(--navy);
-}
-
-.footer-logo-bottom {
-  margin-top: 3px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.4em;
-  color: var(--coral);
-}
+.site-footer .logo-mark { width: 46px; }
 
 .footer-tagline {
   max-width: 44ch;
-  color: var(--text-muted);
+  color: var(--on-navy-muted);
   font-size: 0.9rem;
 }
 
+/* The demo disclaimer stays visually distinct from the marketing copy around
+   it — it is the one thing on the page that must not read as decoration. */
 .footer-demo {
   display: flex;
   align-items: flex-start;
   gap: 8px;
   max-width: 46ch;
   padding: 10px 12px;
-  border: 1px solid rgba(182, 140, 255, 0.35);
+  border: 1px solid var(--gold-line-dark);
   border-radius: var(--r-md);
-  background: var(--lavender-bg);
-  color: #5c3fa3;
+  background: var(--gold-soft-dark);
+  color: var(--gold-pale);
   font-size: 0.78rem;
   font-weight: 600;
   line-height: 1.4;
@@ -65,6 +75,7 @@
 .footer-demo svg {
   flex: 0 0 auto;
   margin-top: 1px;
+  color: var(--gold-bright);
 }
 
 /* --------------------------------------------------------------- groups */
@@ -80,30 +91,35 @@
   min-width: 0;
 }
 
-.footer-group-title {
-  margin-bottom: 10px;
+/* Scoped: .on-dark h2 in global.css would otherwise take the colour. */
+.site-footer .footer-group-title {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gold-line-dark);
   font-family: var(--font-ui);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--gold-bright);
 }
 
 .footer-group ul {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
 }
 
 .footer-group a {
-  color: var(--text-muted);
+  display: inline-block;
+  color: var(--on-navy-muted);
   font-size: 0.88rem;
-  transition: color var(--t-base) var(--ease);
+  transition: color var(--t-base) var(--ease), transform var(--t-fast) var(--ease);
 }
 
 .footer-group a:hover {
-  color: var(--coral);
+  color: var(--gold-bright);
+  transform: translateX(3px);
 }
 
 /* --------------------------------------------------------------- bottom */
@@ -115,8 +131,8 @@
   justify-content: space-between;
   gap: var(--s-3);
   padding-block: var(--s-4) var(--s-6);
-  border-top: 1px solid var(--line);
-  color: var(--text-subtle);
+  border-top: 1px solid var(--gold-line-dark);
+  color: var(--on-navy-subtle);
   font-size: 0.82rem;
 }
 
@@ -125,6 +141,8 @@
   align-items: center;
   gap: 6px;
 }
+
+.footer-city svg { color: var(--rose); }
 
 /* ----------------------------------------------------------- responsive */
 

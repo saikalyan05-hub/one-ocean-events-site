@@ -39,38 +39,67 @@
 
 /* ----------------------------------------------------------- empty state */
 
+/*
+ * An empty wishlist is the first thing a new visitor sees on that route, so it
+ * gets the same care as a full one: a champagne plate inside a gold hairline,
+ * a ringed medallion and a light wash behind it. A dashed grey box would have
+ * read as a loading failure rather than an invitation.
+ */
 .empty-state {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--s-4);
-  padding: clamp(36px, 6vw, 64px) var(--s-6);
-  border: 1px dashed #d8e2e7;
-  border-radius: var(--r-xl);
-  background: linear-gradient(160deg, var(--white), var(--blue-bg));
+  padding: clamp(40px, 6vw, 72px) var(--s-6);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-2xl);
+  background:
+    radial-gradient(520px 260px at 50% -10%, rgba(193, 154, 75, 0.14), transparent 68%),
+    linear-gradient(170deg, var(--white), var(--cream));
   text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Hairline gold rule across the top edge — the same detail that caps the
+   section heads, so the plate belongs to the page it sits on. */
+.empty-state::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: var(--grad-gold-line);
 }
 
 .empty-state-icon {
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 72px;
+  width: 78px;
+  height: 78px;
   border-radius: 50%;
+  border: 1px solid var(--gold-line-strong);
   background: var(--white);
-  box-shadow: var(--shadow-sm);
-  color: var(--coral);
+  color: var(--gold-deep);
+  /* Second ring, drawn with a spread shadow rather than a wrapper element. */
+  box-shadow:
+    0 0 0 7px var(--gold-soft),
+    var(--shadow-sm);
 }
 
 .empty-state-title {
+  margin: var(--s-2) 0 0;
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 800;
+  color: var(--ink);
 }
 
 .empty-state-text {
   max-width: 46ch;
   color: var(--text-muted);
+  line-height: 1.65;
 }
 
 .empty-state-actions {
@@ -85,8 +114,8 @@
 .spinner {
   width: 28px;
   height: 28px;
-  border: 3px solid var(--line);
-  border-top-color: var(--coral);
+  border: 3px solid var(--gold-soft);
+  border-top-color: var(--gold-deep);
   border-radius: 50%;
   animation: spin 720ms linear infinite;
 }
@@ -116,7 +145,10 @@
 .skeleton-card {
   height: 320px;
   border-radius: var(--r-lg);
-  background: linear-gradient(100deg, #f2f6f8 30%, #fbfdfe 50%, #f2f6f8 70%);
+  /* Warm shimmer: the cool grey this replaced was the one cold surface left on
+     the site, and it showed on every list before the data resolved. */
+  border: 1px solid var(--gold-line);
+  background: linear-gradient(100deg, var(--cream) 30%, var(--white) 50%, var(--cream) 70%);
   background-size: 300% 100%;
   animation: shimmer 1.3s linear infinite;
 }
@@ -162,7 +194,7 @@
   place-items: center;
   width: 44px;
   height: 44px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
   border-radius: 50%;
   background: var(--white);
   color: var(--navy);
@@ -172,8 +204,8 @@
 }
 
 .icon-btn:hover {
-  border-color: var(--coral);
-  color: var(--coral);
+  border-color: var(--gold-deep);
+  color: var(--gold-deep);
   transform: translateY(-1px);
 }
 
@@ -271,7 +303,7 @@
   width: 100%;
   min-width: 0;
   appearance: none;
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
   background: var(--white);
   color: var(--ink);
   font-weight: 700;
@@ -279,11 +311,11 @@
   transition: border-color var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
 }
 
-.loc-input:hover { border-color: var(--coral); }
+.loc-input:hover { border-color: var(--gold-deep); }
 
 .loc-input:focus-visible {
   outline: none;
-  border-color: var(--coral);
+  border-color: var(--gold-deep);
   box-shadow: var(--shadow-ring);
 }
 

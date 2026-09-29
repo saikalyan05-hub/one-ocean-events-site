@@ -306,3 +306,24 @@ export const VENDOR_IMAGES = {
   'lakeview-garden-resort': u(P.resortPoolCabanas),
   'pearl-city-banquets': u(P.hotelPoolDusk),
 };
+
+/* ------------------------------------------------------------- categories */
+
+/**
+ * Cover photograph for each homepage category tile, keyed by the category id in
+ * data/categories.js. Same truthfulness rule as everywhere else in this file:
+ * the picture has to show the kind of work the tile actually leads to.
+ *
+ * "All Categories" is deliberately absent — that tile is a shortcut, not a
+ * service, and the grid renders it as a gold panel instead of a photograph.
+ */
+export const CATEGORY_IMAGES = {
+  'wedding-decoration': u(P.mandapStage, 600, 450),
+  'catering-services': u(P.feastSpreadOverhead, 600, 450),
+  'event-entertainment': u(P.concertStagePurple, 600, 450),
+  'birthday-parties': u(P.balloonCeiling, 600, 450),
+  'corporate-events': u(P.conferenceHall, 600, 450),
+  'photography-videography': u(P.coupleBlackWhite, 600, 450),
+  'mehendi-makeup': u(P.bridalEyeMakeup, 600, 450),
+  venues: u(P.banquetInterior, 600, 450),
+};

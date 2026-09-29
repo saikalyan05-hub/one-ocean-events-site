@@ -1,56 +1,159 @@
+/**
+ * Category tiles — a centred column on a pastel card: inset photograph, label,
+ * then a round gold arrow button.
+ *
+ * Nine across in one row at desktop, as the reference shows. That only works
+ * because the photograph is *inset* rather than bleeding to the tile edge: an
+ * edge-to-edge 16:10 photo at 135px looks like a cropped thumbnail, while a
+ * rounded inset square at the same width reads as a deliberate object sitting
+ * on its pastel card. The inset also leaves the card's own tint visible on all
+ * four sides, which is what makes nine different photographs read as one family.
+ *
+ * Below 1280 the row can no longer hold nine legible labels, so it steps down
+ * through 5 → 4 → 3 and finally becomes a snap-scroll strip on phones.
+ */
+
 .category-section {
   position: relative;
 }
 
 .category-list {
   display: grid;
-  grid-template-columns: repeat(9, minmax(0, 1fr));
-  gap: clamp(8px, 0.9vw, 16px);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(10px, 0.9vw, 16px);
+}
+
+@media (min-width: 1280px) {
+  .category-list {
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+  }
 }
 
 .category-tile {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   gap: 10px;
   width: 100%;
   height: 100%;
-  min-height: 124px;
-  padding: 18px 10px 16px;
-  border: 1px solid transparent;
+  padding: 12px 10px 14px;
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-lg);
-  background: var(--tile-bg, var(--blue-bg));
+  background: var(--tone-bg, var(--blue-bg));
   color: var(--ink);
-  cursor: pointer;
+  c‍ursor: pointer;
   text-align: center;
-  transition: transform 180ms var(--ease), box-shadow 180ms var(--ease), border-color 180ms var(--ease);
+  box-shadow: var(--shadow-xs);
+  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease),
+    border-color 220ms var(--ease);
 }
 
+/* Lift, a hair of scale and a tiny top-back tilt read as soft 3D depth without
+   ever tipping into a spinning-object look (spec §9). */
 .category-tile:hover {
-  transform: translateY(-4px);
-  border-color: var(--tile-accent, var(--sky));
-  box-shadow: var(--shadow-md);
+  transform: perspective(900px) translateY(-5px) rotateX(2.5deg) scale(1.02);
+  border-color: var(--gold-line-strong);
+  box-shadow: var(--shadow-lg);
 }
 
-.category-icon {
+/* ------------------------------------------------------------------ media */
+
+.category-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: calc(var(--r-md) - 2px);
+  /* A white rim separates the photo from the pastel card without a hard line. */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), var(--shadow-xs);
+  background: var(--tone-bg);
+}
+
+.category-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms var(--ease-out);
+}
+
+.category-tile:hover .category-img {
+  transform: scale(1.07);
+}
+
+/* A wash in the tile's own pastel keeps nine different photographs reading as
+   one family rather than a contact sheet. Light, because the page is light —
+   the old navy scrim now reads as a smudge. */
+.category-tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 253, 250, 0.12), rgba(58, 38, 24, 0.24));
+}
+
+/* Small gold-rimmed glyph chip, bottom-left of the photo. */
+.category-chip {
+  position: absolute;
+  left: 7px;
+  bottom: 7px;
   display: grid;
   place-items: center;
-  /* Matches the reference, where the glyph is the dominant element of the tile. */
-  width: 44px;
-  height: 44px;
-  color: var(--tile-accent, var(--sky));
-  transition: transform 180ms var(--ease);
+  width: 26px;
+  height: 26px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--gold-line-strong);
+  background: rgba(255, 253, 247, 0.94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--tone-fg, var(--gold-deep));
+  box-shadow: 0 3px 9px rgba(58, 38, 24, 0.22);
+  transition: transform 220ms var(--ease);
 }
 
-.category-tile:hover .category-icon {
-  transform: scale(1.08);
+.category-tile:hover .category-chip {
+  transform: translateY(-2px) scale(1.06);
+}
+
+/* "All Categories" is a shortcut, not a service — a champagne panel, not a
+   photo. On the white build this is gold-on-cream rather than gold-on-navy. */
+.category-all .category-media {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(150deg, var(--champagne), var(--sand));
+}
+
+.category-all .category-tint {
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.7), transparent 70%);
+}
+
+.category-allmark {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-line-strong);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--gold-deep);
+}
+
+/* ------------------------------------------------------------------- body */
+
+/* Takes the leftover height so the arrow buttons align across the row even
+   when one label wraps to two lines and its neighbour does not. */
+.category-body {
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
 }
 
 .category-label {
+  min-width: 0;
   font-size: 0.82rem;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
   /* Two lines max so every tile in the row keeps the same height. */
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -59,33 +162,46 @@
   overflow: hidden;
 }
 
-/* --------------------------------------------------------------- tones */
+/* Small gold arrow button, centred beneath the label (reference category cards). */
+.category-go {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--gold-line);
+  color: var(--gold-deep);
+  box-shadow: var(--shadow-xs);
+  transition: transform 220ms var(--ease), background 220ms var(--ease),
+    color 220ms var(--ease), border-color 220ms var(--ease),
+    box-shadow 220ms var(--ease);
+}
 
-.tone-pink     { --tile-bg: var(--pink-bg);     --tile-accent: #ef5da8; }
-.tone-lavender { --tile-bg: var(--lavender-bg); --tile-accent: var(--lavender); }
-.tone-peach    { --tile-bg: var(--peach-bg);    --tile-accent: #f4468c; }
-.tone-yellow   { --tile-bg: var(--yellow-bg);   --tile-accent: var(--orange); }
-.tone-sky      { --tile-bg: var(--blue-bg);     --tile-accent: var(--sky); }
-.tone-rose     { --tile-bg: var(--rose-bg);     --tile-accent: #ec4899; }
-.tone-mint     { --tile-bg: var(--mint-bg);     --tile-accent: var(--teal); }
-.tone-blue     { --tile-bg: var(--blue-bg);     --tile-accent: #2f9fe0; }
+.category-tile:hover .category-go {
+  transform: translateY(-1px) scale(1.08);
+  background: var(--grad-gold);
+  color: #3a2a0c;
+  border-color: transparent;
+  box-shadow: var(--shadow-sm);
+}
 
 /* ----------------------------------------------------------- responsive */
 
-@media (max-width: 1199px) {
-  .category-list { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 1099px) {
+  .category-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
-@media (max-width: 991px) {
-  .category-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .category-tile { min-height: 116px; }
+@media (max-width: 859px) {
+  .category-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 767px) {
   /* Horizontal scroll strip, edge-to-edge but without page overflow (spec §8). */
   .category-list {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     margin-inline: calc(var(--gutter) * -1);
     padding-inline: var(--gutter);
     padding-block: 4px;
@@ -101,20 +217,13 @@
 
   .category-list > li {
     flex: 0 0 auto;
-    width: 118px;
+    width: 150px;
     scroll-snap-align: start;
   }
 
-  .category-tile {
-    min-height: 112px;
-    padding: 14px 8px;
-  }
-
-  .category-icon { width: 38px; height: 38px; }
-  .category-icon svg { width: 22px; height: 22px; }
-  .category-label { font-size: 0.76rem; }
+  .category-label { font-size: 0.8rem; }
 }
 
-@media (max-width: 480px) {
-  .category-list > li { width: 106px; }
+@media (max-width: 400px) {
+  .category-list > li { width: 138px; }
 }

@@ -1,26 +1,53 @@
-/* Shared chrome for every non-home page. */
+/**
+ * Shared chrome for every non-home page.
+ *
+ * Every route arrives the same way the homepage does: a bright blush stage that
+ * the floating glass header sits inside, then pearl for the working content
+ * below. One arrival treatment across the site is what makes the pages read as
+ * chapters of one product rather than eight separate screens.
+ *
+ * The stage is light, not navy (spec: the site is never dark by default). What
+ * separates it from the content beneath it is warmth plus a gold seam, the same
+ * device the homepage bands use — not a tonal jump.
+ */
 
 .page {
   padding-bottom: var(--s-20);
+  background: var(--page);
 }
 
 /* ------------------------------------------------------------ page hero */
 
+/*
+ * Pulled up under the sticky header exactly as `.hero` is, so the navy shows
+ * through the glass bar instead of meeting it at a hard edge. Its own stacking
+ * context, so the botanical layer inside can never paint over the header.
+ */
 .page-hero {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
+  margin-top: calc(var(--header-h) * -1);
   margin-bottom: var(--s-10);
-  padding-block: var(--s-12) var(--s-10);
-  background: linear-gradient(160deg, var(--blue-bg) 0%, var(--page) 62%);
+  padding-block: calc(var(--header-h) + var(--s-10)) var(--s-12);
+  border-bottom: 1px solid var(--gold-line);
+  background:
+    radial-gradient(900px 420px at 12% -30%, rgba(193, 154, 75, 0.14), transparent 62%),
+    radial-gradient(760px 400px at 92% 130%, rgba(236, 63, 143, 0.08), transparent 60%),
+    linear-gradient(170deg, var(--blush-50), var(--pearl) 46%, var(--blush-100));
+  color: var(--text);
 }
 
 .page-hero-inner {
   position: relative;
   z-index: var(--z-content);
+}
+
+.page-hero-inner > * {
   max-width: 760px;
 }
 
-.page-title {
+.page-hero .page-title {
   margin: var(--s-3) 0 0;
   font-family: var(--font-display);
   font-size: clamp(2rem, 1.3rem + 2.6vw, 3.1rem);
@@ -28,14 +55,7 @@
   color: var(--ink);
 }
 
-.page-title .accent {
-  background: linear-gradient(100deg, var(--coral), var(--orange));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.page-lede {
+.page-hero .page-lede {
   max-width: 62ch;
   margin: var(--s-3) 0 0;
   color: var(--text-muted);
@@ -45,6 +65,9 @@
 
 .page-hero .search-bar {
   margin-top: var(--s-6);
+  /* Lifted clear of the blush rather than sunk into it: search is the first
+     action on the page and has to sit in front of the stage, not on it. */
+  box-shadow: var(--shadow-lg);
 }
 
 /* --------------------------------------------------------------- notes */
@@ -55,9 +78,9 @@
   gap: 8px;
   margin: var(--s-8) 0 0;
   padding: var(--s-4);
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-md);
-  background: var(--page);
+  background: var(--cream);
   color: var(--text-muted);
   font-size: 0.86rem;
   line-height: 1.55;
@@ -66,13 +89,13 @@
 .page-note svg {
   flex: 0 0 auto;
   margin-top: 2px;
-  color: var(--sky);
+  color: var(--gold-deep);
 }
 
 .page-note-warn {
-  border-color: #F3D9A8;
+  border-color: #f3d9a8;
   background: var(--peach-bg);
-  color: #8A5A18;
+  color: #8a5a18;
 }
 
 .page-note-warn svg { color: var(--orange); }
@@ -92,7 +115,7 @@
   gap: 6px;
   min-height: 40px;
   padding: 8px 16px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--gold-line);
   border-radius: var(--r-pill);
   background: var(--white);
   color: var(--text-body);
@@ -105,14 +128,17 @@
 }
 
 .chip:hover {
-  border-color: var(--coral);
-  color: var(--coral);
+  border-color: var(--gold-deep);
+  color: var(--gold-deep);
 }
 
 .chip.is-on {
   border-color: transparent;
-  background: linear-gradient(120deg, var(--coral), var(--orange));
-  color: var(--white);
+  background: var(--grad-gold);
+  /* Dark ink on gold, matching .btn-primary — white on champagne never
+     clears contrast. */
+  color: #3a2a0c;
+  box-shadow: 0 6px 16px rgba(169, 126, 48, 0.28);
 }
 
 .chip-count {
@@ -128,8 +154,215 @@
 }
 
 .chip.is-on .chip-count {
-  background: rgba(255, 255, 255, 0.26);
-  color: var(--white);
+  background: rgba(58, 42, 12, 0.16);
+  color: #3a2a0c;
+}
+
+/* ==================================================== vendor filter panel */
+
+/*
+ * Discovery is a two-column layout on desktop (spec §12): a sticky filter
+ * column beside the grid. The same panel markup renders inside `.filter-drawer`
+ * on phones, so there is one set of controls and one set of handlers — the
+ * breakpoint only decides where the panel is parented visually.
+ */
+
+.vendors-layout {
+  display: grid;
+  grid-template-columns: 268px minmax(0, 1fr);
+  gap: var(--s-8);
+  align-items: start;
+}
+
+.filter-panel {
+  position: sticky;
+  /* Clears the sticky header rather than sliding under it. */
+  top: calc(var(--header-h) + var(--s-4));
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  padding: var(--s-5);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.filter-group + .filter-group {
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line-soft);
+}
+
+.filter-title {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: left;
+  c‍ursor: pointer;
+  transition: background-color var(--t-base) var(--ease), color var(--t-base) var(--ease),
+    border-color var(--t-base) var(--ease);
+}
+
+.filter-option-lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.filter-option-lead svg {
+  flex: 0 0 auto;
+  color: var(--gold-deep);
+}
+
+.filter-option:hover {
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+/* The selected row is a tint plus a gold rim, not a filled gold bar: nine of
+   these stacked in one column would turn the sidebar into a gold block. */
+.filter-option.is-on {
+  border-color: var(--gold-line-strong);
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+.filter-count {
+  flex: 0 0 auto;
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: var(--r-pill);
+  background: var(--page);
+  color: var(--text-subtle);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.filter-option.is-on .filter-count {
+  background: var(--white);
+  color: var(--gold-deep);
+}
+
+.filter-select {
+  width: 100%;
+  min-height: 44px;
+}
+
+.filter-clear {
+  justify-content: center;
+}
+
+/* The drawer trigger belongs to phones; desktop has the panel in view. */
+.filter-trigger {
+  position: relative;
+  display: none;
+}
+
+.filter-trigger-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pink);
+}
+
+/* ---- drawer (phones and small tablets) ---- */
+
+.filter-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+  background: rgba(40, 24, 30, 0.42);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-base) var(--ease);
+}
+
+.filter-scrim.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.filter-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: calc(var(--z-drawer) + 1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  width: min(340px, 88vw);
+  height: 100dvh;
+  padding: var(--s-5) var(--s-5) var(--s-8);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: linear-gradient(180deg, var(--pearl), var(--blush-50) 70%);
+  border-right: 1px solid var(--gold-line);
+  box-shadow: 20px 0 60px rgba(96, 66, 48, 0.2);
+  translate: -100% 0;
+  transition: translate var(--t-base) var(--ease);
+}
+
+.filter-drawer.is-open {
+  translate: 0 0;
+}
+
+.filter-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.filter-drawer-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+}
+
+.filter-drawer-done {
+  margin-top: auto;
+  justify-content: center;
 }
 
 /* -------------------------------------------------------------- toolbar */
@@ -142,7 +375,7 @@
   gap: var(--s-4);
   margin-bottom: var(--s-6);
   padding-bottom: var(--s-4);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--gold-line);
 }
 
 .toolbar-count {
@@ -184,10 +417,15 @@
 
 /* -------------------------------------------------------- category page */
 
+/*
+ * The category index shows the same photographic tile as the homepage row, one
+ * size up and carrying a live vendor count. An icon-only list here would have
+ * made the index look like a sitemap of the page that sells the categories.
+ */
 .cat-page-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--s-4);
+  gap: clamp(14px, 1.4vw, 22px);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -195,33 +433,73 @@
 
 .cat-page-card {
   display: flex;
-  align-items: center;
-  gap: var(--s-3);
+  flex-direction: column;
   height: 100%;
-  padding: var(--s-4);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  background: var(--white);
+  overflow: hidden;
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-xl);
+  background: var(--tone-bg, var(--white));
   color: var(--ink);
   text-decoration: none;
-  transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease),
-    border-color var(--t-base) var(--ease);
+  box-shadow: var(--shadow-xs);
+  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease),
+    border-color 220ms var(--ease);
 }
 
 .cat-page-card:hover {
-  transform: translateY(-3px);
-  border-color: transparent;
-  box-shadow: var(--shadow-md);
+  transform: perspective(900px) translateY(-6px) rotateX(2.5deg) scale(1.01);
+  border-color: var(--gold-line-strong);
+  box-shadow: var(--shadow-lg);
+}
+
+.cat-page-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.cat-page-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms var(--ease-out);
+}
+
+.cat-page-card:hover .cat-page-img { transform: scale(1.07); }
+
+.cat-page-tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(8, 19, 39, 0.22));
 }
 
 .cat-page-icon {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
   display: grid;
   place-items: center;
-  flex: 0 0 auto;
-  width: 52px;
-  height: 52px;
-  border-radius: var(--r-md);
-  color: var(--navy);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--gold-line-strong);
+  background: rgba(255, 253, 247, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--tone-fg, var(--gold-deep));
+  box-shadow: 0 4px 12px rgba(8, 19, 39, 0.28);
+  transition: transform 220ms var(--ease);
+}
+
+.cat-page-card:hover .cat-page-icon { transform: translateY(-2px) scale(1.06); }
+
+.cat-page-body {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex: 1;
+  padding: 14px 14px 14px 16px;
 }
 
 .cat-page-text {
@@ -242,42 +520,60 @@
   font-size: 0.82rem;
 }
 
+/* Same small gold arrow button as the homepage tile. */
 .cat-page-arrow {
+  display: grid;
+  place-items: center;
   flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
   margin-left: auto;
-  color: var(--text-subtle);
+  border-radius: 50%;
+  border: 1px solid var(--gold-line);
+  background: var(--white);
+  color: var(--gold-deep);
+  box-shadow: var(--shadow-xs);
+  transition: transform 220ms var(--ease), background 220ms var(--ease),
+    color 220ms var(--ease), border-color 220ms var(--ease);
 }
 
-.cat-page-card:hover .cat-page-arrow { color: var(--coral); }
-
-/* Tile tints, shared with the homepage category row. */
-.tone-pink .cat-page-icon,
-.tone-pink .step-icon,
-.tone-pink .value-icon { background: var(--pink-bg); }
-.tone-lavender .cat-page-icon,
-.tone-lavender .step-icon,
-.tone-lavender .value-icon { background: var(--lavender-bg); }
-.tone-peach .cat-page-icon,
-.tone-peach .step-icon,
-.tone-peach .value-icon { background: var(--peach-bg); }
-.tone-yellow .cat-page-icon { background: var(--yellow-bg); }
-.tone-sky .cat-page-icon { background: var(--blue-bg); }
-.tone-rose .cat-page-icon { background: var(--rose-bg); }
-.tone-mint .cat-page-icon,
-.tone-mint .step-icon,
-.tone-mint .value-icon { background: var(--mint-bg); }
-.tone-blue .cat-page-icon { background: var(--blue-bg); }
+.cat-page-card:hover .cat-page-arrow {
+  transform: translateX(3px);
+  background: var(--grad-gold);
+  color: #3a2a0c;
+  border-color: transparent;
+}
 
 /* ---------------------------------------------------------- breakpoints */
+
+/* The sidebar takes 268px off the content column, so discovery runs one column
+   narrower than a full-bleed grid would at the same viewport. */
+.vendors-page .vendor-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (min-width: 1500px) {
+  .vendors-page .vendor-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
 
 @media (max-width: 1199px) {
   .vendor-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .cat-page-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .vendors-layout { gap: var(--s-5); grid-template-columns: 240px minmax(0, 1fr); }
+  .vendors-page .vendor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Below this the sidebar would leave the cards too narrow to read, so the
+   filters move into the drawer and the grid takes the full width. */
+@media (max-width: 1023px) {
+  .vendors-layout { grid-template-columns: minmax(0, 1fr); }
+  .filter-panel { display: none; }
+  .filter-trigger { display: inline-flex; }
+  .vendors-page .vendor-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 991px) {
-  .page-hero { padding-block: var(--s-10) var(--s-8); }
+  .page-hero { padding-block: calc(var(--header-h) + var(--s-5)) var(--s-8); }
   .vendor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4); }
+  .vendors-page .vendor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cat-page-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -305,6 +601,7 @@
 }
 
 @media (max-width: 560px) {
-  .vendor-grid { grid-template-columns: 1fr; }
+  .vendor-grid,
+  .vendors-page .vendor-grid { grid-template-columns: 1fr; }
   .cat-page-grid { grid-template-columns: 1fr; }
 }

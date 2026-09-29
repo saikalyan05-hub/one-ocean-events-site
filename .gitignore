@@ -26,3 +26,5 @@ dialog-shots
 *.njsproj
 *.sln
 *.sw?
+
+.vercel

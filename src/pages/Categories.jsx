@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { FILTERABLE_CATEGORIES, vendorMatchesCategory } from '../data/categories';
+import { CATEGORY_IMAGES } from '../data/images';
 import Icon from '../components/common/Icon';
-import { Breadcrumb } from '../components/common';
+import { Breadcrumb, SafeImage } from '../components/common';
 import Decor from '../components/Hero/Decor';
 import './pages.css';
 
 /**
- * Category index. Each tile shows a real count of matching vendors — including
- * zero, which is the honest answer for the categories the source data does not
- * cover yet (spec §8).
+ * Category index. The same photographic tile the homepage row uses, one size up
+ * and carrying a real count of matching vendors — including zero, which is the
+ * honest answer for the categories the source data does not cover yet (spec §8).
  */
 export default function Categories() {
   const { vendors, setFilters } = useApp();
@@ -17,7 +18,7 @@ export default function Categories() {
   return (
     <div className="page">
       <header className="page-hero">
-        <Decor scope="page" />
+        <Decor scope="page" on="light" />
         <div className="container page-hero-inner">
           <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: 'Categories' }]} />
           <h1 className="page-title">
@@ -40,18 +41,32 @@ export default function Categories() {
                   className={`cat-page-card tone-${category.tone}`}
                   onClick={() => setFilters({ categoryId: category.id })}
                 >
-                  <span className="cat-page-icon" aria-hidden="true">
-                    <Icon name={category.icon} size={26} />
-                  </span>
-                  <span className="cat-page-text">
-                    <span className="cat-page-label">{category.label}</span>
-                    <span className="cat-page-count">
-                      {count === 0
-                        ? 'No vendors yet'
-                        : `${count} ${count === 1 ? 'vendor' : 'vendors'}`}
+                  <span className="cat-page-media" aria-hidden="true">
+                    <SafeImage
+                      src={CATEGORY_IMAGES[category.id]}
+                      alt=""
+                      className="cat-page-img"
+                      aria-hidden="true"
+                    />
+                    <span className="cat-page-tint" />
+                    <span className="cat-page-icon">
+                      <Icon name={category.icon} size={19} />
                     </span>
                   </span>
-                  <Icon name="arrowRight" size={18} className="cat-page-arrow" />
+
+                  <span className="cat-page-body">
+                    <span className="cat-page-text">
+                      <span className="cat-page-label">{category.label}</span>
+                      <span className="cat-page-count">
+                        {count === 0
+                          ? 'No vendors yet'
+                          : `${count} ${count === 1 ? 'vendor' : 'vendors'}`}
+                      </span>
+                    </span>
+                    <span className="cat-page-arrow" aria-hidden="true">
+                      <Icon name="arrowRight" size={16} />
+                    </span>
+                  </span>
                 </Link>
               </li>
             );
